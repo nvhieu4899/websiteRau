@@ -54,7 +54,7 @@ app.use('/thanh-toan', checkOutRouter);
 app.use('/dang-nhap', loginRouter);
 app.use('/dang-ki', registerRouter);
 app.use('/ot-chuong', singleProductRouter);
-app.use('/mot-san-pham', singleProductRouter);
+app.use('/chi-tiet', singleProductRouter);
 
 app.use('/thong-tin', userInfoRouter);
 

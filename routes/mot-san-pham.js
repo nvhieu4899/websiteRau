@@ -3,12 +3,14 @@ var router = express.Router();
 var Product = require('../models/product');
 
 
-router.get('/sp', (req, res, next) => {
+router.get('', (req, res, next) => {
     const id = req.query.productId;
-    const prod = Product.findById(id, (err, data) => {
-        if (err) throw err;
-        res.render('mot-san-pham', { title: 'Sản phẩm - ' + data.name, sp: data });
-    })
+    if (id != null) {
+        let prod = Product.findById(id, (err, data) => {
+            if (err) res.sendStatus(404);
+            res.render('mot-san-pham', { title: 'Sản phẩm - ' + data.name, sp: data });
+        })
+    }
 });
 
 module.exports = router;
