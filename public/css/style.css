@@ -11532,13 +11532,13 @@ h5,
     color: #fff;
 }
 
-.btn.btn-black {
+.btn.btn-black:hover {
     background: #000000;
     border: 1px solid #000000;
     color: #fff;
 }
 
-.btn.btn-black:hover {
+.btn.btn-black {
     background: #82ae46;
     border: 1px solid #82ae46;
     color: #fff;
@@ -11884,6 +11884,12 @@ h5,
 .product-details .price span {
     font-size: 30px;
     color: #000000;
+}
+
+.product-details .price span.price-dc {
+    text-decoration: line-through;
+    color: #b3b3b3;
+    font-size: 20px;
 }
 
 .product-details button i {

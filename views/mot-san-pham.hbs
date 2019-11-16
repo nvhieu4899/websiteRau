@@ -33,7 +33,13 @@
 								<a href="#" class="mr-2" style="color: #000;">{{{sp.sold}}} <span style="color: #bbb;">Đã bán</span></a>
 							</p>
 						</div>
-    				<p class="price"><span>&#8363;{{{sp.price}}}</span></p>
+									{{#if sp.salePrice}}
+									<p class="price"><span class="mr-2 price-dc">&#8363;{{{sp.price}}}</span>
+									<br><span
+											class="price-sale">&#8363;{{{sp.salePrice}}}</span></p>
+									{{else}}
+    								<p class="price"><span>&#8363;{{{sp.price}}}</span></p>
+									{{/if}}
     				<p>{{{sp.description}}}
 						</p>
 						<div class="row mt-4">
