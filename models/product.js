@@ -7,7 +7,8 @@ var product = new mongoose.Schema({
     rate: { type: Number, required: false },
     rateCount: { type: Number, required: false },
     sold: { type: Number, required: false },
-    available: { type: Number, required: false }
+    available: { type: Number, required: false },
+    salePrice: { type: Number, required: false }
 });
 
 module.exports = mongoose.model('Product', product, 'Product');
