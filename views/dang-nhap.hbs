@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/util.css">
+<title>{{{title}}}</title>
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+				<span class="login100-form-title">
+					Đăng nhập
+				</span>
+
+				<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+					<input class="input100" type="text" name="username" placeholder="Tên đăng nhập">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate="Please enter password">
+					<input class="input100" type="password" name="pass" placeholder="Mật khẩu">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="text-right p-t-13 p-b-23">
+					<a class="txt2" href = "#modalForgotPass" data-toggle="modal">
+						Quên mật khẩu?
+					</a>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn trigger-btn" href = "#modalLoginSuccess" data-toggle = "modal">
+						Đăng nhập
+					</button>
+				</div>
+				<div id = "modalLoginSuccess" class="modal fade text-center">
+					<div class="modal-dialog modal-confirm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="icon-box">
+									<i class="material-icons">&#xE876;</i>
+								</div>
+								<h4 class="modal-title">Thành công!</h4>
+							</div>
+							<div class="modal-body">
+								<p class="text-center">Bạn đã đăng nhập thành công
+								</p>
+							</div>
+							<div class="modal-footer">
+								<button class="login100-form-btn trigger-btn" data-dismiss="modal">Tiếp tục</button>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div id = "modalForgotPass" class="modal fade text-center">
+					<div class="modal-dialog modal-confirm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="icon-box">
+									<i class="material-icons">?</i>
+								</div>
+								<h4 class="modal-title">Quên mật khẩu?</h4>
+							</div>
+							<div class="modal-body">
+                				<input type="text" class="form-control" placeholder="Nhập địa chỉ email">
+							</div>
+							<div class="modal-footer">
+								<button class="login100-form-btn trigger-btn" data-dismiss="modal">Đặt lại mật khẩu</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="flex-col-c p-t-170 p-b-40">
+					<span class="txt1 p-b-9">
+						Chưa có tài khoản?
+					</span>
+					<a href="/dang-ki" class="txt3">
+						Đăng kí ngay
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>$("#modalLoginSuccess").empty().append(modalLoginSuccess);
+</script>
