@@ -17,20 +17,10 @@ var singleProductRouter = require('./routes/mot-san-pham');
 var userInfoRouter = require('./routes/thong-tin');
 
 
-// const uri = "mongodb+srv://customer:0766976947@doanckweb-f3fht.mongodb.net/test?retryWrites=true&w=majority";
-// mongoose.connect(uri, function(err) {
-//     if (err) throw err;
-//     console.log("D")
-// });
-// mongoose.connect('mongodb://localhost:27017/CustomerSite', { useNewUrlParser: true }, function(err) {
-//     if (err) throw err;
-//     console.log('Successfully connected');
 
-// });
 mongoose.connect('mongodb+srv://customer:' + encodeURI('0766976947') + '@doanckweb-f3fht.mongodb.net/CustomerSite', { useNewUrlParser: true }, function(err) {
     if (err) throw err;
     console.log('Successfully connected');
-
 });
 
 var app = express();
@@ -53,9 +43,7 @@ app.use('/gio-hang', cartRouter);
 app.use('/thanh-toan', checkOutRouter);
 app.use('/dang-nhap', loginRouter);
 app.use('/dang-ki', registerRouter);
-app.use('/ot-chuong', singleProductRouter);
 app.use('/chi-tiet', singleProductRouter);
-
 app.use('/thong-tin', userInfoRouter);
 
 // catch 404 and forward to error handler

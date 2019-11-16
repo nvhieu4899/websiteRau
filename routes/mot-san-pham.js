@@ -8,8 +8,8 @@ router.get('', async(req, res, next) => {
     if (id != null) {
         let displayProd, rela;
         const productFind = Product.findById(id);
-        const relaProductFind = Product.find().limit(4);
         displayProd = await productFind.exec();
+        const relaProductFind = Product.find({ category: displayProd.category }).limit(4);
         rela = await relaProductFind.exec();
         res.render('mot-san-pham', { title: 'Sản phẩm - ' + displayProd.name, sp: displayProd, relaProducts: rela });
     }

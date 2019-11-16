@@ -8,7 +8,8 @@ var product = new mongoose.Schema({
     rateCount: { type: Number, required: false },
     sold: { type: Number, required: false },
     available: { type: Number, required: false },
-    salePrice: { type: Number, required: false }
+    salePrice: { type: Number, required: false },
+    category: { type: String, required: false }
 });
 
-module.exports = mongoose.model('Product', product, 'Product');
+module.exports = mongoose.model('Product', product, 'product');
