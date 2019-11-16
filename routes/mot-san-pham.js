@@ -9,7 +9,7 @@ router.get('', async(req, res, next) => {
         let displayProd, rela;
         const productFind = Product.findById(id);
         displayProd = await productFind.exec();
-        const relaProductFind = Product.find({ category: displayProd.category }).limit(4);
+        const relaProductFind = Product.find({ category: displayProd.category, _id: { $ne: displayProd.id } }).limit(4);
         rela = await relaProductFind.exec();
         res.render('mot-san-pham', { title: 'Sản phẩm - ' + displayProd.name, sp: displayProd, relaProducts: rela });
     }
