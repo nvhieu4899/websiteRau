@@ -14,11 +14,10 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
-					<li><a href="#" class="active">Tất cả</a></li>
-					<li><a href="#">Rau củ</a></li>
-					<li><a href="#">Trái cây</a></li>
-					<li><a href="#">Nước ép</a></li>
-					<li><a href="#">Hạt sấy khô</a></li>
+					<li><a href="/san-pham" class="active">Tất cả</a></li>
+					{{#each categorys}}
+					<li><a href="/san-pham?loai={{{_id}}}">{{{name}}}</a></li>
+					{{/each}}
 				</ul>
 			</div>
 		</div>
