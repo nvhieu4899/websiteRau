@@ -5,10 +5,13 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178 " method="post">
                 <span class="login100-form-title">
                     Đăng kí
                 </span>
+                {{#if error }}
+				<span style="color: red; font-size: 2em;">{{error}}</span>
+				{{/if}}
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
                     <input class="input100" type="text" name="username" placeholder="Tên đăng nhập">
@@ -20,20 +23,20 @@
                 </div>
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                    <input class="input100" type="password" name="pass" placeholder="Mật khẩu">
+                    <input class="input100" type="password" name="password" placeholder="Mật khẩu">
                     <span class="focus-input100"></span>
                 </div>
                 <br>
-                <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                    <input class="input100" type="password" name="pass" placeholder="Nhập lại mật khẩu">
+                {{!-- <div class="wrap-input100 validate-input" data-validate="Please enter password">
+                    <input class="input100" type="password" name="password2" placeholder="Nhập lại mật khẩu">
                     <span class="focus-input100"></span>
-                </div>
+                </div> --}}
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn trigger-btn" href="#modalRegisterSuccess" data-toggle="modal">
                         Đăng kí
                     </button>
                 </div>
-                <div id="modalRegisterSuccess" class="modal fade text-center">
+                {{!-- <div id="modalRegisterSuccess" class="modal fade text-center">
                     <div class="modal-dialog modal-confirm">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -51,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  --}}
             </form>
         </div>
     </div>
