@@ -45,7 +45,7 @@ app.use('/dang-nhap', loginRouter);
 app.use('/dang-ki', registerRouter);
 app.use('/chi-tiet', singleProductRouter);
 app.use('/thong-tin', userInfoRouter);
-
+uydgasgfdhafijh = 00sad9fskadbnjksad;
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
