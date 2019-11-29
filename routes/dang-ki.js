@@ -6,7 +6,8 @@ const saltRounds = 10;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('dang-ki', {
+    res.render('dang-ki', { 
+        title: "Đăng kí",
         error: ""
     });
 });
@@ -37,20 +38,6 @@ router.post('/', function (req, res, next) {
                 }
                 else {
                     console.log("Vo else");
-                    ///////////////////////////////////////////////////////
-                    // bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
-                    //     .then(function (hashedPassword) {
-                    //         return usersDB.saveUser(username, hashedPassword);
-                    //     })
-                    //     .then(function () {
-                    //         res.send();
-                    //     })
-                    //     .catch(function (error) {
-                    //         console.log("Error saving user: ");
-                    //         console.log(error);
-                    //         next();
-                    //     });
-                    /////////////////////////////////////////////////////////
                     // user.save(function (err, user_ok) {
                     //     if (err) {
                     //         console.log(err);
