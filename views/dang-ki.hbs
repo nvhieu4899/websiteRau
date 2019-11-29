@@ -5,26 +5,31 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178 " method="post">
+            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" name="registration" method="post">
                 <span class="login100-form-title">
                     Đăng kí
                 </span>
                 {{#if error }}
-				<span style="color: red; font-size: 2em;">{{error}}</span>
-				{{/if}}
+                <span style="color: red; font-size: 2em;">{{error}}</span>
+                {{/if}}
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
                     <input class="input100" type="text" name="username" placeholder="Tên đăng nhập">
-                    <span class="focus-input100"></span>
+                    <span class="focus-input100" id="usernameAlert"></span>
                 </div>
-                <div class="wrap-input100 validate-input" data-validate="Please enter password">
+                <div class="wrap-input100 validate-input" data-validate="Please enter email">
                     <input class="input100" type="email" name="email" placeholder="Email">
-                    <span class="focus-input100"></span>
+                    <span class="focus-input100" id="emailAlert"></span>
                 </div>
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
                     <input class="input100" type="password" name="password" placeholder="Mật khẩu">
-                    <span class="focus-input100"></span>
+                    <span class="focus-input100" id="passwordAlert"></span>
+                </div>
+                <br>
+                <div class="wrap-input100 validate-input" data-validate="Please enter password">
+                    <input class="input100" type="password" name="passwordRetype" placeholder="Nhập lại mật khẩu">
+                    <span class="focus-input100" id="passwordRetypeAlert"></span>
                 </div>
                 <br>
                 {{!-- <div class="wrap-input100 validate-input" data-validate="Please enter password">
@@ -32,7 +37,8 @@
                     <span class="focus-input100"></span>
                 </div> --}}
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn trigger-btn" href="#modalRegisterSuccess" data-toggle="modal">
+                    <button class="login100-form-btn trigger-btn" href="#modalRegisterSuccess" data-toggle="modal"
+                        onclick="validateRegister()">
                         Đăng kí
                     </button>
                 </div>
@@ -60,3 +66,40 @@
     </div>
 </div>
 
+<script>
+    function validateRegister() {
+        let formdata = new FormData(document.querySelector('form'));
+        if (formdata.get("username").length == 0) {
+            document.getElementById("usernameAlert").innerText = "Không được để trống"
+        }
+        else {
+            document.getElementById("usernameAlert").innerText = "";
+        }
+        if (!ValidateEmail(formdata.get("email"))) {
+            document.getElementById("emailAlert").innerText = "Email không hợp lệ";
+        }
+        else {
+            document.getElementById("emailAlert").innerText = "";
+        }
+
+        if (formdata.get("password").length == 0) {
+            document.getElementById("passwordAlert").innerText = "Không được để trống";
+
+        }
+        else {
+            document.getElementById("passwordAlert").innerText = "";
+        }
+        if (formdata.get("password") != formdata.get("passwordRetype"));
+        document.getElementById("passwordRetypeAlert").innerText = "Phải giống với password";
+    else
+    {
+        document.getElementById("passwordRetypeAlert").innerText = "";
+    }
+    }
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value)) {
+            return (true);
+        }
+        return (false);
+    }
+</script>
