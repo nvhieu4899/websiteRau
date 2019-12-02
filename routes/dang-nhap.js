@@ -9,8 +9,8 @@ var passport = require('passport');
 
 passport.initialize();
 passport.use(new LocalStrategy(
-    function (username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
+    function(username, password, done) {
+        User.findOne({ username: username }, function(err, user) {
             if (err) { return done(err); }
             if (!user) { return done(null, false); }
             if (!bcrypt.compareSync(password, user.password)) { return done(null, false); }
@@ -19,13 +19,12 @@ passport.use(new LocalStrategy(
     }
 ));
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function (id, done) {
-    // Coi lai cai nay ne... 
-    User.getUserById(id, function (err, user) {
+passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
         done(err, user);
     });
 });
@@ -37,7 +36,9 @@ router.get('/', (req, res, next) => {
 
 router.post('/', passport.authenticate('local', { failureRedirect: '/dang-nhap' }),
     (req, res) => {
-        res.redirect('/');
+        const finduser = db.findOne({ username: req.user });
+        const usercallback = finduser.exec();
+        res.redirect('/?username=' + req.user.username);
     });
 
 module.exports = router;

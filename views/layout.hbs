@@ -78,8 +78,7 @@
           </li>
           <li class="nav-item"><a href="/ve-chung-toi" class="nav-link">Về chúng tôi</a></li>
           {{#if user}}
-              <li class="nav-item">Xin chào <a href="/thong-tin" class="nav-link">{{user.username}}</a></li>
-              <li class="nav-item"><a href="/thong-tin" class="nav-link">Thông tin tài khoản</a></li>
+              <li class="nav-item"><a href="/thong-tin" class="nav-link">Xin chào {{user.username}}</a></li>
               <li class="nav-item"><a href="/dang-nhap" class="nav-link">Đăng xuất</a></li>
           {{else}}
           <li class="nav-item"><a href="/dang-nhap" class="nav-link">Đăng nhập</a></li>
