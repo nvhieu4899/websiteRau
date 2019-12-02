@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     if (req.body.username && req.body.email && req.body.password) {
         console.log(req.body.password.length);
-        if (req.body.password.length < 7) {
+        if (req.body.password.length < 6) {
             res.render('dang-ki', {
-                error: 'Password ít nhất 7 kí tự!'
+                error: 'Password ít nhất 6 kí tự!'
             });
         } else {
             let user = new db({
