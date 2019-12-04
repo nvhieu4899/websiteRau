@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+
 var passport = require('./passport/passport');
 const session = require('express-session');
 var indexRouter = require('./routes/index');
@@ -26,19 +27,20 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(passport.initialize());
+//app.use(passport.initialize());
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}));
+// app.use(session({
+//     secret: 'keyboard cat',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: true }
+// }));
+app.use(session({ secret: "cats" })); // secret de ra file .env environment 
 
 
 app.use(express.static(path.join(__dirname, 'public')));
