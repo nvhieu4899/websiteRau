@@ -1,18 +1,8 @@
-var express = require('express');
-var router = express.Router();
 var db = require('../models/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const register = (req, res, next) => {
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('dang-ki', {
-        title: "Đăng kí",
-        error: ""
-    });
-});
-
-router.post('/', function(req, res, next) {
     if (req.body.username && req.body.email && req.body.password) {
         console.log(req.body.password.length);
         if (req.body.password.length < 6) {
@@ -65,6 +55,5 @@ router.post('/', function(req, res, next) {
             error: 'Hãy nhập đầy đủ thông tin!'
         });
     }
-});
-
-module.exports = router;
+}
+module.exports = register;
