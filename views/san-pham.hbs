@@ -9,7 +9,51 @@
 		</div>
 	</div>
 </div>
+
 <section class="ftco-section">
+		<div class="container">
+		<form action="" method="get" enctype="multipart/form-data" class="form-horizontal">
+			<div class="row">
+				<div class="col-md-3 form-group">
+					<label for="sortBy" class=" form-control-label">Sắp xếp theo</label>
+					<select name="sortBy" id="SelectLm" class="form-control-sm form-control">
+						<option value="1">Giá</option>
+						<option value="2">Số lượng đã bán</option>
+						<option value="3">Số lượng tồn kho</option>
+					</select>
+				</div>
+				<div class="col-md-3 form-group">
+					<label for="orderBy" class=" form-control-label">Thứ tự</label>
+					<select name="orderBy" id="SelectLm" class="form-control-sm form-control">
+						<option value="0">Không</option>
+						<option value="1">Tăng dần</option>
+						<option value="2">Giảm dần</option>
+					</select>
+				</div>
+				<div class="col-md-3 form-group">
+					<label for="text-input" class="form-control-label">Giá thấp nhất</label>
+					<input type="text" id="text-input" name="minCost" placeholder="" class="form-control">
+				</div>
+				<div class="col-md-3 form-group">
+					<label for="text-input" class=" form-control-label">Giá cao nhất</label>
+					<input type="text" id="text-input" name="maxCost" placeholder="" class="form-control">
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col col-md-3"><label for="text-input" class=" form-control-label">Tên sản phẩm</label></div>
+				<div class="col-12 col-md-9"><input type="text" id="text-input" name="productName" placeholder=""
+					class="form-control"></div>
+			</div>
+			<div>
+				<button type="submit" class="btn btn-success btn-sm">
+					<i class="fa fa-dot-circle-o"></i> Submit
+				</button>
+				<button type="reset" class="btn btn-danger btn-sm">
+					<i class="fa fa-ban"></i> Reset
+				</button>
+			</div>
+		</form>
+	</div>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-5 text-center">
@@ -25,9 +69,9 @@
 			{{#each products}}
 			<div class="col-md-6 col-lg-3 ftco-animate">
 				<div class="product">
-					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid" src="{{{img}}}"
-							alt="Colorlib Template">
-							{{#if salePrice}}
+					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
+							src="{{{img}}}" alt="Colorlib Template">
+						{{#if salePrice}}
 						<span class="status">SALE</span>
 						{{/if}}
 						<div class="overlay"></div>
