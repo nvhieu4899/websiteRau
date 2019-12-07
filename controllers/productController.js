@@ -25,19 +25,13 @@ const allProductController = async(req, res, next) => {
                     res.render('san-pham', { title: 'Sản phẩm - Tất cả', products: callback, categorys: cat });
                 else next();
             });
-
         })
     } else {
         try {
-            const productFind = Category.findById(id);
-            const displayProd = await productFind.exec();
-            const relaProductFind = Product.find({ category: displayProd.id });
-            const rela = await relaProductFind.exec();
-            const cat = await Category.find();
-            Category.find(function(err, cat) {
-                if (!err)
-                    res.render('san-pham', { title: 'Sản phẩm - ' + displayProd.name, products: rela, categorys: cat });
-            });
+            const categories = await Category.find();
+            const cate = await Category.findById(id);
+            const displayProduct = await Product.getProductsByCategory(id);
+            res.render('san-pham', { title: 'Sản phẩm - ' + cate.name, products: displayProduct, categorys: categories });
         } catch (err) {
             next();
         }

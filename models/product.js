@@ -13,16 +13,10 @@ var product = new mongoose.Schema({
 });
 
 const model = mongoose.model('Product', product, 'product');
-module.exports = model;
-
 const allProduct = async() => {
     return await this.find({});
 }
 module.exports.allProduct = allProduct;
-const productByCategory = async(categoryId, pageIndex, pageSize) => {
-    return await this.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
-}
-module.exports.productByCategory = productByCategory;
 const paginateProduct = async(pageIndex, pageSize) => {
     return await this.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
 }
@@ -57,4 +51,7 @@ module.exports.filter = async(productName, categoryId, minCost, maxCost, pageInd
             price: { $min: minCost, $max: maxCost }
         }).skip(pageSize * (pageIndex - 1)).limit(page);
     }
+}
+module.exports.getProductsByCategory = async(categoryId, pageIndex, pageSize) => {
+    return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
