@@ -42,6 +42,6 @@ const allProductController = async(req, res, next) => {
 module.exports.allProduct = allProductController;
 
 module.exports.homepageFeatureProduct = async(req, res, next) => {
-    const FeatureProduct = await Product.find({}).limit(8);
+    const FeatureProduct = await Product.getProductAtPage(1, 1);
     res.render('index', { title: 'Rau - Rau sạch cho mọi nhà', products: FeatureProduct, user: req.user });
 }

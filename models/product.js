@@ -18,7 +18,7 @@ const allProduct = async() => {
 }
 module.exports.allProduct = allProduct;
 const paginateProduct = async(pageIndex, pageSize) => {
-    return await this.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
+    return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
 }
 module.exports.getProductAtPage = paginateProduct;
 
@@ -30,7 +30,6 @@ const relativeProduct = async(productId) => {
 module.exports.relativeProduct = relativeProduct;
 
 const getProductById = async(productId) => {
-
     return await model.findById(productId);
 }
 module.exports.getProductById = getProductById;
