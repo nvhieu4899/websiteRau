@@ -17,15 +17,15 @@ module.exports.singleProduct = singleProductController;
 const allProductController = async(req, res, next) => {
     const id = req.query.loai;
     if (id == null || id === "") {
-        Product.find((err, callback) => {
-            if (err)
-                res.sendStatus(404);
-            Category.find(function(err, cat) {
-                if (!err)
-                    res.render('san-pham', { title: 'Sản phẩm - Tất cả', products: callback, categorys: cat });
-                else next();
-            });
-        })
+        try {
+            const displayProduct = await Product.getProductAtPage(1, 12);
+            const categories = await Category.find();
+            res.render('san-pham', { title: 'Sản phẩm', products: displayProduct, categorys: categories });
+
+        } catch (err) {
+            next();
+        }
+
     } else {
         try {
             const categories = await Category.find();
@@ -36,12 +36,11 @@ const allProductController = async(req, res, next) => {
             next();
         }
     }
-
-
 }
 module.exports.allProduct = allProductController;
 
 module.exports.homepageFeatureProduct = async(req, res, next) => {
-    const FeatureProduct = await Product.getProductAtPage(1, 1);
+    const FeatureProduct = await Product.getProductAtPage(1, 8);
     res.render('index', { title: 'Rau - Rau sạch cho mọi nhà', products: FeatureProduct, user: req.user });
+
 }
