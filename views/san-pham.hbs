@@ -11,7 +11,7 @@
 </div>
 
 <section class="ftco-section">
-		<div class="container">
+	<div class="container">
 		<form action="" method="get" enctype="multipart/form-data" class="form-horizontal">
 			<div class="row">
 				<div class="col-md-3 form-group">
@@ -42,7 +42,7 @@
 			<div class="row form-group">
 				<div class="col col-md-3"><label for="text-input" class=" form-control-label">Tên sản phẩm</label></div>
 				<div class="col-12 col-md-9"><input type="text" id="text-input" name="productName" placeholder=""
-					class="form-control"></div>
+						class="form-control"></div>
 			</div>
 			<div>
 				<button type="submit" class="btn btn-success btn-sm">
@@ -60,7 +60,7 @@
 				<ul class="product-category">
 					<li><a href="/san-pham" class="active">Tất cả</a></li>
 					{{#each categorys}}
-					<li><a href="/san-pham?loai={{{_id}}}">{{{name}}}</a></li>
+					<li><a href="/san-pham/loai={{{_id}}}">{{{name}}}</a></li>
 					{{/each}}
 				</ul>
 			</div>
@@ -111,16 +111,24 @@
 			<div class="col text-center">
 				<div class="block-27">
 					<ul>
-						<li><a href="#">&lt;</a></li>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&gt;</a></li>
+						{{#paginate pagination type="previous"}}
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}" onclick="func({{n}}">&lt;</a></li>
+						{{/paginate}}
+						{{#paginate pagination type="middle" limit="5"}}
+						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}">{{n}}</a></li>
+						{{/paginate}}
+						{{#paginate pagination type="next"}}
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}">&gt;</a></li>
+						{{/paginate}}
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<script>
+	function func(num){	
+	var SchoolId  = 0;
+	window.location.href += "?p="+=num;
+}
+</script>

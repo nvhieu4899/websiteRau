@@ -1,23 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-var passport = require('./passport/passport');
+const passport = require('./passport/passport');
 const session = require('express-session');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var productRouter = require('./routes/san-pham');
-var aboutRouter = require('./routes/ve-chung-toi');
-var cartRouter = require('./routes/gio-hang');
-var checkOutRouter = require('./routes/thanh-toan');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const productRouter = require('./routes/san-pham');
+const aboutRouter = require('./routes/ve-chung-toi');
+const cartRouter = require('./routes/gio-hang');
+const checkOutRouter = require('./routes/thanh-toan');
 mongoose.connect('mongodb+srv://customer:' + encodeURI('0766976947') + '@doanckweb-f3fht.mongodb.net/CustomerSite', { useNewUrlParser: true }, function(err) {
     if (err) throw err;
     console.log('Successfully connected');
 });
-var app = express();
+const app = express();
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -54,5 +54,4 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
 module.exports = app;

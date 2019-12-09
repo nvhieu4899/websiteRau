@@ -54,3 +54,13 @@ module.exports.filter = async(productName, categoryId, minCost, maxCost, pageInd
 module.exports.getProductsByCategory = async(categoryId, pageIndex, pageSize) => {
     return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
+
+module.exports.getTotalPage = async(pageSize) => {
+    try {
+        const count = await model.count({});
+        return Math.ceil(count / pageSize);
+
+    } catch (e) {
+        return 0;
+    }
+};
