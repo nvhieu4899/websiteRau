@@ -21,13 +21,22 @@ const singleProductController = async(req, res, next) => {
 module.exports.singleProduct = singleProductController;
 const allProductController = async(req, res, next) => {
     const id = req.query.loai;
+    const prod = req.query.productName;
     if (!id) {
         try {
             let p = req.query.p;
             if (p == null || p === "") p = 1;
-            const displayProduct = await Product.getProductAtPage(p, PAGE_SIZE);
+            var displayProduct;
+            if (prod == null)
+            {
+                displayProduct = await Product.getProductAtPage(p, PAGE_SIZE);
+            }
+            else
+            {
+                displayProduct = await Product.getProductByName(prod, p, PAGE_SIZE);
+            }
             const categories = await Category.find();
-            const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE);
+            const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, prod);
             res.render('san-pham', {
                 title: 'Sản phẩm',
                 products: displayProduct,

@@ -54,9 +54,11 @@ module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize
     return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
 
-module.exports.getTotalPage = async(pageSize) => {
+module.exports.getTotalPage = async(pageSize, ten) => {
     try {
-        const count = await model.count({});
+        var count;
+        if (ten==null) count = await model.count({});
+        else count = await model.count({name: { $regex: ten }});
         return Math.ceil(count / pageSize);
 
     } catch (e) {
@@ -74,13 +76,6 @@ module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
     }
 };
 
-module.exports.getProductByName = async(ten) => {
-    let trimname = String(ten).trim();
-    return await model.find({
-        name: {
-            $regex: {
-
-            }
-        }
-    })
+module.exports.getProductByName = async(ten, pageIndex, pageSize) => {
+    return await model.find({name: { $regex: ten }}).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
