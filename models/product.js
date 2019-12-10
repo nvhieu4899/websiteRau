@@ -21,7 +21,6 @@ const paginateProduct = async(pageIndex, pageSize) => {
     return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
 }
 module.exports.getProductAtPage = paginateProduct;
-
 const relativeProduct = async(productId) => {
     const product = await model.findById(productId);
     const relaProd = await model.find({ category: product.category, _id: { $ne: productId } });
@@ -51,7 +50,7 @@ module.exports.filter = async(productName, categoryId, minCost, maxCost, pageInd
         }).skip(pageSize * (pageIndex - 1)).limit(page);
     }
 }
-module.exports.getProductsByCategory = async(categoryId, pageIndex, pageSize) => {
+module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize = 8) => {
     return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
 
@@ -74,3 +73,14 @@ module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
         return 0;
     }
 };
+
+module.exports.getProductByName = async(ten) => {
+    let trimname = String(ten).trim();
+    return await model.find({
+        name: {
+            $regex: {
+
+            }
+        }
+    })
+}

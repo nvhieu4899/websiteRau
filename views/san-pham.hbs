@@ -10,7 +10,7 @@
 	</div>
 </div>
 
-<section class="ftco-section">
+<section class="ftco-section" id="formsection">
 	<div class="container">
 		<form action="" method="get" enctype="multipart/form-data" class="form-horizontal">
 			<div class="row">
@@ -46,7 +46,7 @@
 			</div>
 			<div>
 				<button type="submit" class="btn btn-success btn-sm">
-					<i class="fa fa-dot-circle-o"></i> Submit
+					<i class="fa fa-dot-circle-o"></i> Tìm kiếm
 				</button>
 				<button type="reset" class="btn btn-danger btn-sm">
 					<i class="fa fa-ban"></i> Reset
@@ -55,7 +55,7 @@
 		</form>
 	</div>
 	<div class="container">
-		<div class="row justify-content-center">
+		<div class="row justify-content-center" id = "categories">
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
 					<li><a href="/san-pham" class="active">Tất cả</a></li>
@@ -111,26 +111,26 @@
 			<div class="col text-center">
 				<div class="block-27">
 					<ul>
-						{{#if cat}}
-						{{/if}}
-						{{#paginate pagination type="previous"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}">&lt;</a></li>
 						{{/paginate}}
 						{{#paginate pagination type="middle" limit="5"}}
-						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}">{{n}}</a></li>
+						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}#formsection">{{n}}</a></li>
 						{{/paginate}}
 						{{#paginate pagination type="next"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}">&gt;</a></li>
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="{{page_url}}?p={{n}}#formsection">&gt;</a></li>
+						{{/paginate}}
+						{{#paginate pagination type="last"}}
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#categories">&gt;&gt;</a></li>
 						{{/paginate}}
 					</ul>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <script>
-	function func(num){	
-	var SchoolId  = 0;
-	window.location.href += "?p="+=num;
+	function func(pageIndex){	
+	
+	window.location.href = window.location.href + '?p='+ pageIndex;
 }
 </script>
