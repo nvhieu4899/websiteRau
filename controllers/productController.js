@@ -49,17 +49,19 @@ const allProductController = async(req, res, next) => {
             if (p == null || p === "") p = 1;
             const categories = await Category.find();
             const cate = await Category.findById(id);
-            const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE);
+            const TOTAL_SIZE = await Product.getTotalPagecategory(PAGE_SIZE, id);
 
-            const displayProduct = await Product.getProductsByCategory(id);
+            const displayProduct = await Product.getProductsByCategory(id, p, PAGE_SIZE);
+            console.log(cate.id);
             res.render('san-pham', {
                 title: 'Sản phẩm - ' + cate.name,
                 products: displayProduct,
                 categorys: categories,
+                cat: id,
                 pagination: {
                     page: p,
                     pageCount: TOTAL_SIZE,
-                    limit: 4
+                    limit: 4,
                 }
             });
         } catch (err) {

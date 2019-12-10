@@ -64,3 +64,13 @@ module.exports.getTotalPage = async(pageSize) => {
         return 0;
     }
 };
+
+module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
+    try {
+        const count = await model.count({category: categoryId});
+        return Math.ceil(count / pageSize);
+
+    } catch (e) {
+        return 0;
+    }
+};

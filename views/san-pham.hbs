@@ -60,7 +60,7 @@
 				<ul class="product-category">
 					<li><a href="/san-pham" class="active">Tất cả</a></li>
 					{{#each categorys}}
-					<li><a href="/san-pham/loai={{{_id}}}">{{{name}}}</a></li>
+					<li><a href="/san-pham?loai={{{_id}}}">{{{name}}}</a></li>
 					{{/each}}
 				</ul>
 			</div>
@@ -111,8 +111,10 @@
 			<div class="col text-center">
 				<div class="block-27">
 					<ul>
+						{{#if cat}}
+						{{/if}}
 						{{#paginate pagination type="previous"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}" onclick="func({{n}}">&lt;</a></li>
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}">&lt;</a></li>
 						{{/paginate}}
 						{{#paginate pagination type="middle" limit="5"}}
 						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}">{{n}}</a></li>
