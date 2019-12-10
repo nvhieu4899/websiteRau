@@ -21,7 +21,7 @@ const singleProductController = async(req, res, next) => {
 module.exports.singleProduct = singleProductController;
 const allProductController = async(req, res, next) => {
     const id = req.query.loai;
-    if (id == null || id === "") {
+    if (!id) {
         try {
             let p = req.query.p;
             if (p == null || p === "") p = 1;
@@ -32,11 +32,14 @@ const allProductController = async(req, res, next) => {
                 title: 'Sản phẩm',
                 products: displayProduct,
                 categorys: categories,
+                page_url: req.originalUrl,
                 pagination: {
                     page: p,
                     pageCount: TOTAL_SIZE,
-                    limit: 4
-                }
+                    limit: 4,
+                    page_url: req.originalUrl
+                },
+                user: req.user
             });
 
         } catch (err) {
@@ -46,21 +49,23 @@ const allProductController = async(req, res, next) => {
     } else {
         try {
             let p = req.query.p;
+            let name = req.query.productName;
             if (p == null || p === "") p = 1;
             const categories = await Category.find();
             const cate = await Category.findById(id);
             const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE);
-
             const displayProduct = await Product.getProductsByCategory(id);
             res.render('san-pham', {
                 title: 'Sản phẩm - ' + cate.name,
                 products: displayProduct,
                 categorys: categories,
+                page_url: req.originalUrl,
                 pagination: {
                     page: p,
                     pageCount: TOTAL_SIZE,
-                    limit: 4
-                }
+                    limit: 4,
+                },
+                user: req.user
             });
         } catch (err) {
             next();

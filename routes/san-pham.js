@@ -8,9 +8,6 @@ router.get('/', async(req, res, next) => {
 });
 router.get('/chi-tiet', async(req, res, next) => {
     productController.singleProduct(req, res, next);
-});
-router.get('/loai', async(req, res, next) => {
-    productController.categoryProductView(req, res, next);
-})
 
+});
 module.exports = router;
