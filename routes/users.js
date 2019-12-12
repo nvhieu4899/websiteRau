@@ -24,10 +24,7 @@ router.get('/dang-nhap', (req, res, next) => {
 
 router.post('/dang-nhap', passport.authenticate('local', {
     failureRedirect: '/dang-nhap',
-    successRedirect: '/',
-    failureMessage: 'Sai username hoặc password',
-    successMessage: 'Đăng nhập thành công'
-}));
+}, ));
 router.get('/thong-tin', function(req, res, next) {
     res.render('thong-tin', { title: 'Thông tin người dùng', user: req.user });
 });

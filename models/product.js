@@ -19,33 +19,69 @@ const allProduct = async() => {
 }
 module.exports.allProduct = allProduct;
 const paginateProduct = async(pageIndex, pageSize) => {
-    return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
+    try {
+        return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
+    } catch (err) {
+        return null;
+    }
 }
 module.exports.getProductAtPage = paginateProduct;
 const relativeProduct = async(productId) => {
-    const product = await model.findById(productId);
-    const relaProd = await model.find({ category: product.category, _id: { $ne: productId } });
-    return relaProd;
+    try {
+        const product = await model.findById(productId);
+        const relaProd = await model.find({ category: product.category, _id: { $ne: productId } });
+        return relaProd;
+    } catch (err) {
+        return null;
+    }
 }
 module.exports.relativeProduct = relativeProduct;
 
 const getProductById = async(productId) => {
-    return await model.findById(productId);
-}
-module.exports.getProductById = getProductById;
-
-module.exports.filter = async(query) => {
-
-    if (!query.minCost) query.minCost = Number.MIN_SAFE_INTEGER;
-    if (!query.maxCost) query.maxCost = Number.MAX_SAFE_INTEGER;
-    if (query.sortBy == 1) {
-        if (query.orderBy == 1) {
-            return await model.find({ $sort: { price: 1 } });
-        } else return await model.find({ $sort: { price: -1 } });
+    try {
+        return await model.findById(productId);
+    } catch (err) {
+        return null
     }
 }
+module.exports.getProductById = getProductById;
+module.exports.filter = async(query, pageIndex, pageSize) => {
+    let minCost = Number.MIN_SAFE_INTEGER;
+    let maxCost = Number.MAX_SAFE_INTEGER;
+    if (query.minCost) minCost = query.minCost;
+    if (query.maxCost) minCost = query.maxCost;
+
+    let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost } });
+    if (query.productName)
+        productQuery = productQuery.where('name').regex(query.productName);
+    let order = 0;
+
+    if (query.orderBy == 1) order = 1;
+    else if (query.orderBy == 2) order = -1;
+    if (order)
+        if (query.sortBy == 1)
+            productQuery = productQuery.sort({ price: order });
+        else if (query.sortBy == 2)
+        productQuery = productQuery.sort({ sold: order });
+    else
+        productQuery = productQuery.sort({ available: order });
+
+    try {
+        return await productQuery.skip(pageSize * (pageIndex - 1)).limit(pageSize).exec();
+    } catch (err) {
+        return null;
+    }
+
+
+}
+
+
 module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize = 8) => {
-    return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
+    try {
+        return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
+    } catch (err) {
+        return null;
+    }
 }
 
 module.exports.getTotalPage = async(pageSize, cateId) => {
@@ -54,22 +90,20 @@ module.exports.getTotalPage = async(pageSize, cateId) => {
         if (ten == null) count = await model.count({});
         else count = await model.count({ category: cateId });
         return Math.ceil(count / pageSize);
-
     } catch (e) {
-        return 0;
+        return null;
     }
 };
 
 module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
     try {
-        const count = await model.estimatedDocumentCount({ category: categoryId });
+        const count = await model.count({ category: categoryId });
         return Math.ceil(count / pageSize);
-
     } catch (e) {
-        return 0;
+        return null;
     }
 };
 
 module.exports.getProductByName = async(ten, pageIndex, pageSize) => {
     return await model.find({ name: { $regex: ten } }).skip((pageIndex - 1) * pageSize).limit(pageSize);
-}
+};

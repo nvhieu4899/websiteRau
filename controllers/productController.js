@@ -21,7 +21,6 @@ const allProductController = async(req, res, next) => {
     let p = req.query.p;
     if (!p) p = 1;
     try {
-
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
         const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, null);
@@ -71,5 +70,19 @@ module.exports.homepageFeatureProduct = async(req, res, next) => {
         title: 'Rau - Rau sạch cho mọi nhà',
         products: FeatureProduct,
         user: req.user
+    });
+}
+module.exports.filterAllProductController = async(req, res, next) => {
+    const display_product = await Product.filter(req.query, PAGE_SIZE);
+    const categories = await Category.getAllCategories();
+    res.render('san-pham', {
+        title: 'Sản phẩm',
+        products: display_product,
+        categorys: categories,
+        pagination: {
+            page: 1,
+            pageCount: 3,
+            limit: 4
+        }
     });
 }
