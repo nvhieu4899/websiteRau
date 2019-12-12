@@ -13,6 +13,7 @@ var product = new mongoose.Schema({
 });
 
 const model = mongoose.model('Product', product, 'product');
+model.createIndexes({ name: "text" });
 const allProduct = async() => {
     return await this.find({});
 }
@@ -33,32 +34,25 @@ const getProductById = async(productId) => {
 }
 module.exports.getProductById = getProductById;
 
-module.exports.filter = async(productName, categoryId, minCost, maxCost, pageIndex, pageSize) => {
+module.exports.filter = async(query) => {
 
-    if (minCost === "" || minCost == null) minCost = Number.MIN_SAFE_INTEGER;
-    if (maxCost === "" || maxCost == null) maxCost = Number.MAX_SAFE_INTEGER;
-    if (categoryId == null || categoryId === "") {
-        return await model.find({
-            name: { $regex: productName },
-            price: { $min: minCost, $max: maxCost }
-        }).skip(pageSize * (pageIndex - 1)).limit(page);
-    } else {
-        return await model.find({
-            name: { $regex: productName },
-            category: categoryId,
-            price: { $min: minCost, $max: maxCost }
-        }).skip(pageSize * (pageIndex - 1)).limit(page);
+    if (!query.minCost) query.minCost = Number.MIN_SAFE_INTEGER;
+    if (!query.maxCost) query.maxCost = Number.MAX_SAFE_INTEGER;
+    if (query.sortBy == 1) {
+        if (query.orderBy == 1) {
+            return await model.find({ $sort: { price: 1 } });
+        } else return await model.find({ $sort: { price: -1 } });
     }
 }
 module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize = 8) => {
     return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }
 
-module.exports.getTotalPage = async(pageSize, ten) => {
+module.exports.getTotalPage = async(pageSize, cateId) => {
     try {
         var count;
-        if (ten==null) count = await model.count({});
-        else count = await model.count({name: { $regex: ten }});
+        if (ten == null) count = await model.count({});
+        else count = await model.count({ category: cateId });
         return Math.ceil(count / pageSize);
 
     } catch (e) {
@@ -68,7 +62,7 @@ module.exports.getTotalPage = async(pageSize, ten) => {
 
 module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
     try {
-        const count = await model.count({category: categoryId});
+        const count = await model.estimatedDocumentCount({ category: categoryId });
         return Math.ceil(count / pageSize);
 
     } catch (e) {
@@ -77,5 +71,5 @@ module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
 };
 
 module.exports.getProductByName = async(ten, pageIndex, pageSize) => {
-    return await model.find({name: { $regex: ten }}).skip((pageIndex - 1) * pageSize).limit(pageSize);
+    return await model.find({ name: { $regex: ten } }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 }

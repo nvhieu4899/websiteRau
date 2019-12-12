@@ -1,5 +1,5 @@
 <title>{{{title}}}</title>
-<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
+<div class="hero-wrap hero-bread" style="background-image: url('/images/bg_1.jpg');">
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-center justify-content-center">
 			<div class="col-md-9 ftco-animate text-center">
@@ -60,7 +60,7 @@
 				<ul class="product-category">
 					<li><a href="/san-pham" class="active">Tất cả</a></li>
 					{{#each categorys}}
-					<li><a href="/san-pham?loai={{{_id}}}">{{{name}}}</a></li>
+					<li><a href="/san-pham/{{{_id}}}">{{{name}}}</a></li>
 					{{/each}}
 				</ul>
 			</div>
@@ -111,6 +111,12 @@
 			<div class="col text-center">
 				<div class="block-27">
 					<ul>
+						{{#paginate pagination type="first"}}
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#categories">&lt;&lt;</a></li>
+						{{/paginate}}
+						{{#paginate pagination type="previous"}}
+						<li {{#if disabled}}class="disabled" {{/if}}><a href="{{page_url}}?p={{n}}#formsection">&lt;</a></li>
+						{{/paginate}}
 						{{#paginate pagination type="middle" limit="5"}}
 						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}#formsection">{{n}}</a></li>
 						{{/paginate}}
@@ -127,9 +133,3 @@
 		</div>
 	</div>
 </section>
-<script>
-	function func(pageIndex){	
-	
-	window.location.href = window.location.href + '?p='+ pageIndex;
-}
-</script>
