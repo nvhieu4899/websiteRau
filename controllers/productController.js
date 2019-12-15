@@ -41,7 +41,7 @@ const allProductController = async(req, res, next) => {
 module.exports.allProduct = allProductController;
 
 module.exports.categoryProductController = async(req, res, next) => {
-    const cateId = req.param('id');
+    const cateId = req.params.id;
     let p = req.query.p;
     if (!p) p = 1;
     try {
@@ -89,20 +89,19 @@ module.exports.filterAllProductController = async(req, res, next) => {
 
 module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     const display_product = await Product.filter(req.query, PAGE_SIZE);
-    const categories = await Category.getAllCategories();
-    res.status(200);
-    res.setHeader('Content-type', 'application/json');
-    res.send(JSON.stringify(display_product));
+    res.render('sp-box-template', { products: display_product }, (err, html) => {
+        res.send(html);
+    });
 }
 module.exports.categoryProductController_Ajax = async(req, res, next) => {
-    const cateId = req.param('id');
+    const cateId = req.params.id;
     let p = req.query.p;
     if (!p) p = 1;
     try {
         const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
         const cates = await Category.getAllCategories();
         const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
-        res.render('sp-box-template', { products: display_product }, (err, html) => {
+        res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
             res.send(html);
         });
     } catch (err) {

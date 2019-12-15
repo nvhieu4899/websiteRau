@@ -78,7 +78,7 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
 
 module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize = 8) => {
     try {
-        return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize);
+        return await model.find({ category: categoryId }).skip((pageIndex - 1) * pageSize).limit(pageSize).lean();
     } catch (err) {
         return null;
     }

@@ -60,44 +60,41 @@
 				<ul class="product-category">
 					<li><a href="/san-pham" class="active">Tất cả</a></li>
 					{{#each categorys}}
-
 					<span id="categories">
+						<li><a href="javascript:loadCategory('{{{_id}}}')">{{{name}}}</a</li> </span> {{/each}} </ul>
+									</div> </div> <div class="row" id="listProduct">
 
-					<li><a href="/san-pham/loai/{{{_id}}}">{{{name}}}</a></li>
-					</span>
-					{{/each}}
-				</ul>
 			</div>
-		</div>
-		<div class="row" id="listProduct">
-
-		</div>
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						{{#paginate pagination type="first"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#formsection">&lt;&lt;</a></li>
-						{{/paginate}}
-						{{#paginate pagination type="previous"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="{{page_url}}?p={{n}}#formsection">&lt;</a>
-						</li>
-						{{/paginate}}
-						{{#paginate pagination type="middle" limit="7"}}
-						<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}#formsection">{{n}}</a></li>
-						{{/paginate}}
-						{{#paginate pagination type="next"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="{{page_url}}?p={{n}}#formsection">&gt;</a>
-						</li>
-						{{/paginate}}
-						{{#paginate pagination type="last"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#formsection">&gt;&gt;</a></li>
-						{{/paginate}}
-					</ul>
+			<div class="row mt-5">
+				<div class="col text-center">
+					<div class="block-27">
+						<ul>
+							{{#paginate pagination type="first"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#formsection">&lt;&lt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="previous"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a
+									href="{{page_url}}?p={{n}}#formsection">&lt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="middle" limit="7"}}
+							<li {{#if active}} class="active" {{/if}}><a href="?p={{n}}#formsection">{{n}}</a></li>
+							{{/paginate}}
+							{{#paginate pagination type="next"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a
+									href="{{page_url}}?p={{n}}#formsection">&gt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="last"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}#formsection">&gt;&gt;</a>
+							</li>
+							{{/paginate}}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 <script>
 	var requestProduct = new XMLHttpRequest();
@@ -107,7 +104,20 @@
 			$("#listProduct").html(this.responseText);
 		}
 	};
-	requestProduct.open("GET", "/ajax/san-pham/",true);
+	requestProduct.open("GET", "/ajax/san-pham/", true);
 	requestProduct.send();
-
+</script>
+<script>
+	function loadCategory(cateId) {
+		var requestProduct = new XMLHttpRequest();
+		requestProduct.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var htmlRendered = this.responseText;
+				document.getElementById('listProduct').innerHTML='';
+				$("#listProduct").html(htmlRendered);
+			}
+		};
+		requestProduct.open("GET", "/ajax/san-pham/loai/" + cateId, true);
+		requestProduct.send();
+	}
 </script>

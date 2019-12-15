@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(session({ secret: "cats" })); // secret de ra file .env environment 
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '3153600000' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
