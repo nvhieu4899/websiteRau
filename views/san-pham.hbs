@@ -104,10 +104,10 @@
 	requestProduct.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			var htmlRendered = this.responseText;
-			$('#listProduct').append(htmlRendered);
+			$("#listProduct").html(this.responseText);
 		}
 	};
-	requestProduct.open("GET", "/ajax/san-pham/", true);
+	requestProduct.open("GET", "/ajax/san-pham/",true);
 	requestProduct.send();
 
 </script>
