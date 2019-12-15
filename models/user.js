@@ -17,4 +17,14 @@ var UsersSchema = new mongoose.Schema({
         default: "0"
     }
 });
-module.exports = mongoose.model('users', UsersSchema, 'users');
+const model = mongoose.model('users', UsersSchema, 'users');
+module.exports.model = model;
+module.exports.checkIfExists = async(username) => {
+    try {
+        const user = await model.findOne({ username: username });
+        if (user) return true;
+        else return false;
+    } catch (err) {
+        return false;
+    }
+}

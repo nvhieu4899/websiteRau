@@ -16,7 +16,7 @@ router.get('/dang-ki', function(req, res, next) {
 });
 
 router.post('/dang-ki', function(req, res, next) {
-    userController(req, res, next);
+    userController.register(req, res, next);
 });
 router.get('/dang-nhap', (req, res, next) => {
     res.render('dang-nhap', { title: 'Đăng nhập', error: "" });
@@ -26,6 +26,7 @@ router.post('/dang-nhap', passport.authenticate('local', {
     failureRedirect: '/dang-nhap',
 }, ));
 router.get('/thong-tin', function(req, res, next) {
+
     res.render('thong-tin', { title: 'Thông tin người dùng', user: req.user });
 });
 router.get("/dang-xuat", (req, res) => {

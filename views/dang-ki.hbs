@@ -5,40 +5,38 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" name="registration" method="post">
+
+            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" name="registration" method="post"
+                onsubmit="return validateForm();">
                 <span class="login100-form-title">
                     Đăng kí
                 </span>
                 {{#if error }}
                 <span style="color: red; font-size: 2em;">{{error}}</span>
                 {{/if}}
-
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-                    <input class="input100" type="text" name="username" placeholder="Tên đăng nhập">
+                    <input class="input100" type="text" name="username" placeholder="Tên đăng nhập" required>
                     <span class="focus-input100" id="usernameAlert"></span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Please enter email">
-                    <input class="input100" type="email" name="email" placeholder="Email">
+                    <input class="input100" type="email" name="email" placeholder="Email" required>
                     <span class="focus-input100" id="emailAlert"></span>
                 </div>
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                    <input class="input100" type="password" name="password" placeholder="Mật khẩu">
+                    <input class="input100" type="password" name="password" placeholder="Mật khẩu" required>
                     <span class="focus-input100" id="passwordAlert"></span>
                 </div>
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                    <input class="input100" type="password" name="passwordRetype" placeholder="Nhập lại mật khẩu">
+                    <input class="input100" type="password" name="passwordRetype" placeholder="Nhập lại mật khẩu"
+                        required>
                     <span class="focus-input100" id="passwordRetypeAlert"></span>
                 </div>
                 <br>
-                {{!-- <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                    <input class="input100" type="password" name="password2" placeholder="Nhập lại mật khẩu">
-                    <span class="focus-input100"></span>
-                </div> --}}
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn trigger-btn" href="#modalRegisterSuccess" data-toggle="modal"
-                        onclick="validateRegister()">
+                        id="register" type="submit">
                         Đăng kí
                     </button>
                 </div>
@@ -67,39 +65,65 @@
 </div>
 
 <script>
-    function validateRegister() {
-        let formdata = new FormData(document.querySelector('form'));
-        if (formdata.get("username").length == 0) {
-            document.getElementById("usernameAlert").innerText = "Không được để trống"
-        }
-        else {
-            document.getElementById("usernameAlert").innerText = "";
-        }
-        if (!ValidateEmail(formdata.get("email"))) {
-            document.getElementById("emailAlert").innerText = "Email không hợp lệ";
-        }
-        else {
-            document.getElementById("emailAlert").innerText = "";
-        }
-
-        if (formdata.get("password").length == 0) {
-            document.getElementById("passwordAlert").innerText = "Không được để trống";
-
-        }
-        else {
-            document.getElementById("passwordAlert").innerText = "";
-        }
-        if (formdata.get("password") != formdata.get("passwordRetype"));
-        document.getElementById("passwordRetypeAlert").innerText = "Phải giống với password";
-    else
-    {
-        document.getElementById("passwordRetypeAlert").innerText = "";
-    }
-    }
     function ValidateEmail(mail) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value)) {
             return (true);
         }
         return (false);
+    }
+    function validatePassword(password, retype) {
+        if (!password || !retype) return false;
+        else {
+            if (String(password).length >= 6 && password === retype) return true;
+            else return false;
+        }
+    }
+    function validateForm() {
+        var isSendable = true;
+        var username = document.forms["registration"]["username"].value;
+        var email = document.forms["registration"]['email'].value;
+        var password = document.forms["registration"]['password'].value;
+        var retype = document.forms["registration"]['passwordRetype'].value;
+
+        const alertusername = document.getElementById("usernameAlert");
+        const alertEmail = document.getElementById("emailAlert");
+        const passwordAlert = document.getElementById("passwordAlert");
+        const alertRetype = document.getElementById("usernameAlert");
+
+        if (!username) {
+            alertusername.innerText = "Không được để trống";
+            isSendable = false;
+        }
+        else {
+            alertusername.innerText = "";
+        }
+        if (!email) {
+            alertEmail.innerText = "Không được để trống"
+            isSendable = false;
+        }
+        else if (!ValidateEmail(email)) {
+            alertEmail.innerText = "Email không hợp lệ";
+            isSendable = false;
+        }
+        else {
+            alertEmail.innerText = "";
+        }
+        if (!password) {
+            passwordAlert.innerText = "Không được để trống"
+            isSendable = false;
+        }
+        else if (!validatePassword(password, retype)) {
+            alertRetype.innerText = "Không giống với password";
+            isSendable = false;
+        }
+        else {
+            passwordAlert.innerText = "";
+            alertRetype.innerText = "";
+        }
+        if (isSendable) {
+            document.getElementById('registration').removeAttribute('passwordRetype');
+            return true;
+        }
+        else return false;
     }
 </script>

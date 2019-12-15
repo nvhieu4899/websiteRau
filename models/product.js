@@ -20,7 +20,7 @@ const allProduct = async() => {
 module.exports.allProduct = allProduct;
 const paginateProduct = async(pageIndex, pageSize) => {
     try {
-        return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize);
+        return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize).lean();
     } catch (err) {
         return null;
     }

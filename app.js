@@ -13,6 +13,9 @@ const productRouter = require('./routes/san-pham');
 const aboutRouter = require('./routes/ve-chung-toi');
 const cartRouter = require('./routes/gio-hang');
 const checkOutRouter = require('./routes/thanh-toan');
+
+const ajaxRouter = require('./routes/ajax');
+
 mongoose.connect('mongodb+srv://customer:' + encodeURI('0766976947') + '@doanckweb-f3fht.mongodb.net/CustomerSite', { useNewUrlParser: true }, function(err) {
     if (err) throw err;
     console.log('Successfully connected');
@@ -41,6 +44,9 @@ app.use('/san-pham', productRouter);
 app.use('/ve-chung-toi', aboutRouter);
 app.use('/gio-hang', cartRouter);
 app.use('/thanh-toan', checkOutRouter);
+app.use('/ajax', ajaxRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

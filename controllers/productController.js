@@ -86,3 +86,40 @@ module.exports.filterAllProductController = async(req, res, next) => {
         }
     });
 }
+
+module.exports.filterAllProductController_Ajax = async(req, res, next) => {
+    const display_product = await Product.filter(req.query, PAGE_SIZE);
+    const categories = await Category.getAllCategories();
+    res.status(200);
+    res.setHeader('Content-type', 'application/json');
+    res.send(JSON.stringify(display_product));
+}
+module.exports.categoryProductController_Ajax = async(req, res, next) => {
+    const cateId = req.param('id');
+    let p = req.query.p;
+    if (!p) p = 1;
+    try {
+        const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
+        const cates = await Category.getAllCategories();
+        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
+        res.render('sp-box-template', { products: display_product }, (err, html) => {
+            res.send(html);
+        });
+    } catch (err) {
+        throw err;
+    }
+}
+module.exports.allProduct_ajax = async(req, res, next) => {
+    let p = req.query.p;
+    if (!p) p = 1;
+    try {
+        const category = await Category.getAllCategories();
+        const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
+        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, null);
+        res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
+            res.send(html);
+        });
+    } catch (err) {
+        next();
+    }
+}
