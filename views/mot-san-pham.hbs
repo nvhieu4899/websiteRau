@@ -1,93 +1,125 @@
-	<title>{{{title}}}</title>
+<title>{{{title}}}</title>
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<span class="subheading">Sản phẩm</span>
+				<h2 class="mb-4">{{{sp.name}}}</h2>
+				{{!-- <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p> --}}
+			</div>
+		</div>
+	</div>
 	<section class="ftco-section">
-    	<div class="container">
-				<div class="row justify-content-center mb-3 pb-3">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<span class="subheading">Sản phẩm</span>
-            <h2 class="mb-4">{{{sp.name}}}</h2>
-            {{!-- <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p> --}}
-          </div>
-        </div>   		
-    	</div>
-            <section class="ftco-section">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-lg-6 mb-5 ftco-animate">
-    				<a href="{{{sp.img}}}" class="image-popup"><img src="{{{sp.img}}}" class="img-fluid" alt="Colorlib Template"></a>
-    			</div>
-    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-    				<h3>{{{sp.name}}}</h3>
-    				<div class="rating d-flex">
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2">{{{sp.rate}}}</a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-							</p>
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2" style="color: #000;">{{{sp.rateCount}}} <span style="color: #bbb;">Đánh giá</span></a>
-							</p>
-							<p class="text-left">
-								<a href="#" class="mr-2" style="color: #000;">{{{sp.sold}}} <span style="color: #bbb;">Đã bán</span></a>
-							</p>
-						</div>
-									{{#if sp.salePrice}}
-									<p class="price"><span class="mr-2 price-dc">&#8363;{{{sp.price}}}</span>
-									<br><span
-											class="price-sale">&#8363;{{{sp.salePrice}}}</span></p>
-									{{else}}
-    								<p class="price"><span>&#8363;{{{sp.price}}}</span></p>
-									{{/if}}
-    				<p>{{{sp.description}}}
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 mb-5 ftco-animate">
+					<a href="{{{sp.img}}}" class="image-popup"><img src="{{{sp.img}}}" class="img-fluid"
+							alt="Colorlib Template"></a>
+				</div>
+				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+					<h3>{{{sp.name}}}</h3>
+					<div class="rating d-flex">
+						<p class="text-left mr-4">
+							<a href="#" class="mr-2">{{{sp.rate}}}</a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
 						</p>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="form-group d-flex">
-		              <div class="select-wrap">
-	                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                  <select name="" id="" class="form-control">
-	                  	<option value="">Nhỏ</option>
-	                    <option value="">Vừa</option>
-	                    <option value="">Lớn</option>
-	                    <option value="">Cực lớn</option>
-	                  </select>
-	                </div>
-		            </div>
+						<p class="text-left mr-4">
+							<a href="#" class="mr-2" style="color: #000;">{{{sp.rateCount}}} <span
+									style="color: #bbb;">Đánh giá</span></a>
+						</p>
+						<p class="text-left">
+							<a href="#" class="mr-2" style="color: #000;">{{{sp.sold}}} <span style="color: #bbb;">Đã
+									bán</span></a>
+						</p>
+					</div>
+					{{#if sp.salePrice}}
+					<p class="price"><span class="mr-2 price-dc">&#8363;{{{sp.price}}}</span>
+						<br><span class="price-sale">&#8363;{{{sp.salePrice}}}</span></p>
+					{{else}}
+					<p class="price"><span>&#8363;{{{sp.price}}}</span></p>
+					{{/if}}
+					<p>{{{sp.description}}}
+					</p>
+					<div class="row mt-4">
+						<div class="col-md-6">
+							<div class="form-group d-flex">
+								<div class="select-wrap">
+									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+									<select name="" id="" class="form-control">
+										<option value="">Nhỏ</option>
+										<option value="">Vừa</option>
+										<option value="">Lớn</option>
+										<option value="">Cực lớn</option>
+									</select>
+								</div>
 							</div>
-							<div class="w-100"></div>
-							<div class="input-group col-md-6 d-flex mb-3">
-	             	<span class="input-group-btn mr-2">
-	                	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
-	                   <i class="ion-ios-remove"></i>
-	                	</button>
-	            		</span>
-	             	<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-	             	<span class="input-group-btn ml-2">
-	                	<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-	                     <i class="ion-ios-add"></i>
-	                 </button>
-	             	</span>
-	          	</div>
-	          	<div class="w-100"></div>
-	          	<div class="col-md-12">
-	          		<p style="color: #000;">Có sẵn {{{sp.available}}} kg</p>
-	          	</div>
-          	</div>
-          	<p><a href="/gio-hang" class="btn btn-black py-3 px-5">Thêm vào giỏ</a></p>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-    	<div class="container">
-    		<div class="row">
-    		{{#each relaProducts}}
+						</div>
+						<div class="w-100"></div>
+						<div class="input-group col-md-6 d-flex mb-3">
+							<span class="input-group-btn mr-2">
+								<button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+									<i class="ion-ios-remove"></i>
+								</button>
+							</span>
+							<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
+								min="1" max="100">
+							<span class="input-group-btn ml-2">
+								<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+									<i class="ion-ios-add"></i>
+								</button>
+							</span>
+						</div>
+						<div class="w-100"></div>
+						<div class="col-md-12">
+							<p style="color: #000;">Có sẵn {{{sp.available}}} kg</p>
+						</div>
+					</div>
+					<p><a href="/gio-hang" class="btn btn-black py-3 px-5">Thêm vào giỏ</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section">
+		<div class="container">
+			<h5>Bình luận</h5>
+			<form action="" method="post">
+			<div class="row form-group">
+				<div class="col col-md-3"><label for="text-input" class=" form-control-label">Nhập tên</label></div>
+				<div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" placeholder="Text"
+						class="form-control"><small class="form-text text-muted">Nhập tên</small></div>
+			</div>
+			<div class="row form-group">
+				<div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Nội dung</label></div>
+				<div class="col-12 col-md-9">
+					<textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Content..."
+						class="form-control"></textarea>
+				</div>
+			</div>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-primary btn-sm">
+					<i class="fa fa-dot-circle-o"></i> Submit
+				</button>
+				<button type="reset" class="btn btn-danger btn-sm">
+					<i class="fa fa-ban"></i> Reset
+				</button>
+			</div>
+			</form>
+		</div>
+		</div>
+	</section>
+	<div class="container">
+		<h5>Sản phẩm cùng loại</h5>
+		<div class="row">
+			{{#each relaProducts}}
 			<div class="col-md-6 col-lg-3 ftco-animate">
 				<div class="product">
-					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid" src="{{{img}}}"
-							alt="Colorlib Template">
-							{{#if salePrice}}
+					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
+							src="{{{img}}}" alt="Colorlib Template">
+						{{#if salePrice}}
 						<span class="status">SALE</span>
 						{{/if}}
 						<div class="overlay"></div>
@@ -122,6 +154,6 @@
 				</div>
 			</div>
 			{{/each}}
-    		</div>
-    	</div>
-    </section>
+		</div>
+	</div>
+</section>

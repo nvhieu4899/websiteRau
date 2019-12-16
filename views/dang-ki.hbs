@@ -3,11 +3,10 @@
 <link rel="stylesheet" href="/css/util.css">
 
 <div class="limiter">
-    <div class="container-login100">
+    <div class="container-login100" id ="registerForm">
         <div class="wrap-login100">
 
-            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" name="registration" method="post"
-                onsubmit="return validateForm();">
+            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" name="registration" >
                 <span class="login100-form-title">
                     Đăng kí
                 </span>
@@ -16,27 +15,24 @@
                 {{/if}}
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
                     <input class="input100" type="text" name="username" placeholder="Tên đăng nhập" required>
-                    <span class="focus-input100" id="usernameAlert"></span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Please enter email">
                     <input class="input100" type="email" name="email" placeholder="Email" required>
-                    <span class="focus-input100" id="emailAlert"></span>
                 </div>
+
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
                     <input class="input100" type="password" name="password" placeholder="Mật khẩu" required>
-                    <span class="focus-input100" id="passwordAlert"></span>
                 </div>
                 <br>
                 <div class="wrap-input100 validate-input" data-validate="Please enter password">
                     <input class="input100" type="password" name="passwordRetype" placeholder="Nhập lại mật khẩu"
                         required>
-                    <span class="focus-input100" id="passwordRetypeAlert"></span>
                 </div>
                 <br>
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn trigger-btn" href="#modalRegisterSuccess" data-toggle="modal"
-                        id="register" type="submit">
+                        id="register" type="button" onclick="validateForm()">
                         Đăng kí
                     </button>
                 </div>
@@ -66,7 +62,7 @@
 
 <script>
     function ValidateEmail(mail) {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value)) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true);
         }
         return (false);
@@ -85,45 +81,39 @@
         var password = document.forms["registration"]['password'].value;
         var retype = document.forms["registration"]['passwordRetype'].value;
 
-        const alertusername = document.getElementById("usernameAlert");
-        const alertEmail = document.getElementById("emailAlert");
-        const passwordAlert = document.getElementById("passwordAlert");
-        const alertRetype = document.getElementById("usernameAlert");
-
         if (!username) {
-            alertusername.innerText = "Không được để trống";
             isSendable = false;
         }
         else {
-            alertusername.innerText = "";
         }
         if (!email) {
-            alertEmail.innerText = "Không được để trống"
             isSendable = false;
         }
         else if (!ValidateEmail(email)) {
-            alertEmail.innerText = "Email không hợp lệ";
             isSendable = false;
         }
         else {
-            alertEmail.innerText = "";
         }
         if (!password) {
-            passwordAlert.innerText = "Không được để trống"
             isSendable = false;
         }
         else if (!validatePassword(password, retype)) {
-            alertRetype.innerText = "Không giống với password";
             isSendable = false;
         }
         else {
-            passwordAlert.innerText = "";
-            alertRetype.innerText = "";
         }
         if (isSendable) {
-            document.getElementById('registration').removeAttribute('passwordRetype');
-            return true;
+            var requestProduct = new XMLHttpRequest();
+            requestProduct.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var htmlRendered = this.responseText;
+                    document.getElementById('registerForm').innerHTML = '';
+                    $("#registerForm").html(htmlRendered);
+                }
+            };
+            requestProduct.open("POST", "/ajax/users/dang-ki", true);
+            var param = "username="+username+"&email="+email+"&password="+password;
+            requestProduct.send(param);
         }
-        else return false;
     }
 </script>

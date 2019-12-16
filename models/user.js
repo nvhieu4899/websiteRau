@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 var UsersSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -28,3 +30,18 @@ module.exports.checkIfExists = async(username) => {
         return false;
     }
 }
+module.exports.createNewUser = async(username, email, password) => {
+    bcrypt.hash(password, saltRounds, async(err, hash) => {
+        try {
+            await model.create({
+                username: username,
+                email: email,
+                password: hash
+            });
+            return true;
+        } catch (err) {
+            return false;
+        }
+    });
+
+};

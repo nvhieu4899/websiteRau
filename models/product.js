@@ -15,7 +15,9 @@ var product = new mongoose.Schema({
 const model = mongoose.model('Product', product, 'product');
 model.createIndexes({ name: "text" });
 const allProduct = async() => {
-    return await this.find({});
+    try {
+        return await this.find({});
+    } catch (err) { return null; }
 }
 module.exports.allProduct = allProduct;
 const paginateProduct = async(pageIndex, pageSize) => {
@@ -41,7 +43,7 @@ const getProductById = async(productId) => {
     try {
         return await model.findById(productId);
     } catch (err) {
-        return null
+        return null;
     }
 }
 module.exports.getProductById = getProductById;
@@ -71,8 +73,6 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
     } catch (err) {
         return null;
     }
-
-
 }
 
 

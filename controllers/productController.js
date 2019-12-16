@@ -31,7 +31,7 @@ const allProductController = async(req, res, next) => {
             pagination: {
                 page: p,
                 pageCount: TOTAL_SIZE,
-                limit: 4
+                limit: 9
             }
         });
     } catch (err) {
@@ -55,7 +55,7 @@ module.exports.categoryProductController = async(req, res, next) => {
             pagination: {
                 page: p,
                 pageCount: TOTAL_SIZE,
-                limit: 4
+                limit: 9
             }
         });
     } catch (err) {
@@ -71,7 +71,7 @@ module.exports.homepageFeatureProduct = async(req, res, next) => {
         products: FeatureProduct,
         user: req.user
     });
-}
+};
 module.exports.filterAllProductController = async(req, res, next) => {
     const display_product = await Product.filter(req.query, PAGE_SIZE);
     const categories = await Category.getAllCategories();
@@ -83,9 +83,10 @@ module.exports.filterAllProductController = async(req, res, next) => {
             page: 1,
             pageCount: 3,
             limit: 4
-        }
+        },
+        user: req.user
     });
-}
+};
 
 module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     const display_product = await Product.filter(req.query, PAGE_SIZE);
@@ -114,7 +115,6 @@ module.exports.allProduct_ajax = async(req, res, next) => {
     try {
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
-        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, null);
         res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
             res.send(html);
         });
@@ -122,3 +122,10 @@ module.exports.allProduct_ajax = async(req, res, next) => {
         next();
     }
 }
+module.exports.filterAllProductController_Ajax = async(req, res, next) => {
+    const display_product = await Product.filter(req.query, PAGE_SIZE);
+    const categories = await Category.getAllCategories();
+    res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
+        res.send(html);
+    });
+};
