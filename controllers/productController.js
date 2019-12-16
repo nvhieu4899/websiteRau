@@ -2,6 +2,7 @@ var Product = require('../models/product');
 var Category = require('../models/category');
 let Handlebars = require('../hbs');
 let PAGE_SIZE = 8;
+let TOTAL_SIZE = 3;
 let singleProductController = async(req, res, next) => {
     let id = req.query.productId;
     try {
@@ -90,7 +91,15 @@ module.exports.filterAllProductController = async(req, res, next) => {
 
 module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     const display_product = await Product.filter(req.query, PAGE_SIZE);
-    res.render('sp-box-template', { products: display_product }, (err, html) => {
+    res.render('sp-box-template', {
+        products: display_product,
+        pagination: {
+            page: p,
+            pageCount: 3,
+            limit: 9,
+        },
+        layout: 'sp-box-template'
+    }, (err, html) => {
         res.send(html);
     });
 }
@@ -101,8 +110,16 @@ module.exports.categoryProductController_Ajax = async(req, res, next) => {
     try {
         const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
         const cates = await Category.getAllCategories();
-        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
-        res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
+        // const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
+        res.render('sp-box-template', {
+            products: display_product,
+            pagination: {
+                page: p,
+                pageCount: 3,
+                limit: 9
+            },
+            layout: 'sp-box-template'
+        }, (err, html) => {
             res.send(html);
         });
     } catch (err) {
@@ -115,7 +132,15 @@ module.exports.allProduct_ajax = async(req, res, next) => {
     try {
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
-        res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
+        res.render('sp-box-template', {
+            products: display_product,
+            pagination: {
+                page: p,
+                pageCount: 3,
+                limit: 9
+            },
+            layout: 'sp-box-template'
+        }, (err, html) => {
             res.send(html);
         });
     } catch (err) {
@@ -125,7 +150,15 @@ module.exports.allProduct_ajax = async(req, res, next) => {
 module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     const display_product = await Product.filter(req.query, PAGE_SIZE);
     const categories = await Category.getAllCategories();
-    res.render('sp-box-template', { products: display_product, layout: 'sp-box-template' }, (err, html) => {
+    res.render('sp-box-template', {
+        products: display_product,
+        pagination: {
+            page: p,
+            pageCount: TOTAL_SIZE,
+            limit: 9
+        },
+        layout: 'sp-box-template'
+    }, (err, html) => {
         res.send(html);
     });
 };
