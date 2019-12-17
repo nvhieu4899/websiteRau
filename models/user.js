@@ -14,7 +14,7 @@ var UsersSchema = new mongoose.Schema({
     },
     authen: {
         type: String,
-        default: "0"
+        default: "1"
     }
 });
 module.exports = mongoose.model('users', UsersSchema, 'users');

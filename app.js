@@ -4,9 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const flash = require('connect-flash'); // to add some messages
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const passport = require('./passport/passport');
-const session = require('express-session');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/san-pham');
@@ -28,9 +30,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({ secret: "cats" })); // secret de ra file .env environment 
+//app.use(session({ secret: "cats" })); // secret de ra file .env environment 
+app.use(session({
+    secret: 'mysupersecret', 
+    resave: false, 
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 3 * 60 * 60 * 1000 } // 3 hours
+  }));
 
+app.use((req, res, next) => {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
