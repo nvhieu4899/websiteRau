@@ -24,7 +24,6 @@ const allProductController = async(req, res, next) => {
     try {
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
-        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, null);
         res.render('san-pham', {
             title: 'Sản phẩm',
             products: display_product,
@@ -148,7 +147,9 @@ module.exports.allProduct_ajax = async(req, res, next) => {
     }
 }
 module.exports.filterAllProductController_Ajax = async(req, res, next) => {
-    const display_product = await Product.filter(req.query, PAGE_SIZE);
+    let p = 1;
+    if (req.query.p) p = req.query.p
+    const display_product = await Product.filter(req.query, p, PAGE_SIZE);
     const categories = await Category.getAllCategories();
     res.render('sp-box-template', {
         products: display_product,

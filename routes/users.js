@@ -23,7 +23,7 @@ router.get('/dang-nhap', (req, res, next) => {
 });
 
 router.post('/dang-nhap', passport.authenticate('local', {
-    failureRedirect: '/dang-nhap',
+    failureRedirect: '/users/dang-nhap',
     successRedirect: '/'
 }));
 router.get('/thong-tin', function(req, res, next) {
