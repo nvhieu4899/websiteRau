@@ -11,7 +11,8 @@ let singleProductController = async(req, res, next) => {
         res.render('mot-san-pham', {
             title: displayProd.name,
             sp: displayProd,
-            relaProducts: rela
+            relaProducts: rela,
+            user: req.user
         });
     } catch (err) {
         next();
@@ -28,6 +29,7 @@ const allProductController = async(req, res, next) => {
             title: 'Sản phẩm',
             products: display_product,
             categorys: category,
+            user: req.user,
             pagination: {
                 page: p,
                 pageCount: TOTAL_SIZE,
@@ -56,7 +58,8 @@ module.exports.categoryProductController = async(req, res, next) => {
                 page: p,
                 pageCount: TOTAL_SIZE,
                 limit: 9
-            }
+            },
+            user: req.user
         });
     } catch (err) {
         throw err;
