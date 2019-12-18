@@ -13,7 +13,7 @@ router.get('/add-to-cart/:id', function (req, res, next) {
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    Product.findById(productId, function (err, product) {
+    Product.getProductById(productId, function (err, product) {
         if (err) {
             return res.redirect('/');
         }
