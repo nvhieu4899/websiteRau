@@ -107,3 +107,4 @@ module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
 module.exports.getProductByName = async(ten, pageIndex, pageSize) => {
     return await model.find({ name: { $regex: ten } }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 };
+

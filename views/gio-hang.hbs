@@ -11,6 +11,7 @@
 	</div>
 </div>
 
+{{# if products }}
 <section class="ftco-section ftco-cart">
 	<div class="container">
 		<div class="row">
@@ -28,7 +29,26 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{# each products }}
 							<tr class="text-center">
+								<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+								<td class="image-prod">
+									<div class="img" style="background-image:url({{this.img}});"></div>
+								</td>
+
+								<td class="product-name">
+									<h3> {{ this.name }} </h3>
+								</td>
+
+								<td class="price">&#8363;{{ this.tempPrice }}</td>
+
+								<td class="quantity">{{ this.qty }}</td>
+								
+								<td class="total">&#8363;{{ this.price}}</td>
+							</tr><!-- END TR-->
+							{{/ each }}
+							{{!-- <tr class="text-center">
 								<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
 								<td class="image-prod">
@@ -72,7 +92,7 @@
 								</td>
 
 								<td class="total">&#8363;15.700</td>
-							</tr><!-- END TR-->
+							</tr><!-- END TR--> --}}
 						</tbody>
 					</table>
 				</div>
@@ -109,29 +129,33 @@
 				</div>
 				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Ước lượng</a></p>
 			</div> --}}
-			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-				<div class="cart-total mb-3">
-					<h3>Tổng cộng giỏ hàng</h3>
-					<p class="d-flex">
-						<span>Tạm tính</span>
-						<span>&#8363;20.600</span>
-					</p>
-					<p class="d-flex">
-						<span>Vận chuyển</span>
-						<span>&#8363;0.000</span>
-					</p>
-					<p class="d-flex">
-						<span>Giảm giá</span>
-						<span>&#8363;3.000</span>
-					</p>
-					<hr>
-					<p class="d-flex total-price">
-						<span>Thành tiền</span>
-						<span>&#8363;17.600</span>
-					</p>
-				</div>
-				<p><a href="/thanh-toan" class="btn btn-primary py-3 px-4">Chuyển sang thanh toán</a></p>
+		<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+			<div class="cart-total mb-3">
+				<h3>Tổng cộng giỏ hàng</h3>
+				<p class="d-flex">
+					<span>Tạm tính</span>
+					<span>&#8363;{{totalPrice}}</span>
+				</p>
+				<p class="d-flex">
+					<span>Vận chuyển</span>
+					<span>&#8363;0.000</span>
+				</p>
+				<p class="d-flex">
+					<span>Giảm giá</span>
+					<span>&#8363;0.000</span>
+				</p>
+				<hr>
+				<p class="d-flex total-price">
+					<span>Thành tiền</span>
+					<span>&#8363;{{totalPrice}}</span>
+				</p>
 			</div>
+			<p><a href="/thanh-toan" class="btn btn-primary py-3 px-4">Chuyển sang thanh toán</a></p>
 		</div>
 	</div>
+	</div>
 </section>
+
+{{ else }}
+	<h1>NO ITEMS IN CART</h1>
+{{/ if }}
