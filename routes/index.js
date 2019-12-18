@@ -17,10 +17,8 @@ router.get('/add-to-cart/:id', async(req, res, next) => {
     if (product) {
         cart.add(product, product.id);
         req.session.cart = cart;
-        console.log(req.session.cart);
-        res.redirect('/');
-    } else
-        res.redirect('/')
+        res.redirect('/san-pham');
+    }
 });
 
 module.exports = router;

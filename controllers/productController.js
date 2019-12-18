@@ -25,6 +25,8 @@ const allProductController = async(req, res, next) => {
     try {
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
+        let total = await Product.allProductNumber();
+        let totalPage = Math.ceil(total / PAGE_SIZE);
         res.render('san-pham', {
             title: 'Sản phẩm',
             products: display_product,
@@ -32,7 +34,7 @@ const allProductController = async(req, res, next) => {
             user: req.user,
             pagination: {
                 page: p,
-                pageCount: TOTAL_SIZE,
+                pageCount: totalPage,
                 limit: 9
             }
         });
@@ -112,12 +114,12 @@ module.exports.categoryProductController_Ajax = async(req, res, next) => {
     try {
         const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
         const cates = await Category.getAllCategories();
-        // const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
+        let total = Math.ceil(display_product.length / PAGE_SIZE);
         res.render('sp-box-template', {
             products: display_product,
             pagination: {
                 page: p,
-                pageCount: 3,
+                pageCount: total,
                 limit: 9
             },
             layout: 'sp-box-template'
@@ -134,11 +136,13 @@ module.exports.allProduct_ajax = async(req, res, next) => {
     try {
         const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
+        let total = await Product.allProductNumber();
+        let totalPage = Math.ceil(total / PAGE_SIZE);
         res.render('sp-box-template', {
             products: display_product,
             pagination: {
                 page: p,
-                pageCount: 3,
+                pageCount: totalPage,
                 limit: 9
             },
             layout: 'sp-box-template'
@@ -153,12 +157,14 @@ module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     let p = 1;
     if (req.query.p) p = req.query.p
     const display_product = await Product.filter(req.query, p, PAGE_SIZE);
-    const categories = await Category.getAllCategories();
+    let total = await Product.filterNumber(req.query);
+    let totalPage = Math.ceil(total / PAGE_SIZE);
+
     res.render('sp-box-template', {
         products: display_product,
         pagination: {
             page: p,
-            pageCount: TOTAL_SIZE,
+            pageCount: totalPage,
             limit: 9
         },
         layout: 'sp-box-template'

@@ -15,4 +15,8 @@ router.get('/chi-tiet', async(req, res, next) => {
 router.get('/loai/:id', async(req, res, next) => {
     productController.categoryProductController(req, res, next);
 });
+router.get('/loai/:id/comments', async(req, res, next) => {
+    productController.categoryProductController(req, res, next);
+});
+
 module.exports = router;

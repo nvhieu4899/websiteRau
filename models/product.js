@@ -14,12 +14,12 @@ var product = new mongoose.Schema({
 
 const model = mongoose.model('Product', product, 'product');
 model.createIndexes({ name: "text" });
-const allProduct = async() => {
+module.exports.allProductNumber = async() => {
     try {
-        return await this.find({});
-    } catch (err) { return null; }
+        let products = await model.find({}).lean();
+        return products.length;
+    } catch (err) { return 0; }
 }
-module.exports.allProduct = allProduct;
 const paginateProduct = async(pageIndex, pageSize) => {
     try {
         return await model.find({}).skip(pageSize * (pageIndex - 1)).limit(pageSize).lean();
@@ -75,6 +75,33 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
     }
 }
 
+module.exports.filterNumber = async(query) => {
+    let minCost = Number.MIN_SAFE_INTEGER;
+    let maxCost = Number.MAX_SAFE_INTEGER;
+    if (query.minCost) minCost = query.minCost;
+    if (query.maxCost) minCost = query.maxCost;
+    let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost } });
+    if (query.productName)
+        productQuery = productQuery.where('name').regex(query.productName);
+    let order = 0;
+    if (query.orderBy == 1) order = 1;
+    else if (query.orderBy == 2) order = -1;
+    if (order)
+        if (query.sortBy == 1)
+            productQuery = productQuery.sort({ price: order });
+        else if (query.sortBy == 2)
+        productQuery = productQuery.sort({ sold: order });
+    else
+        productQuery = productQuery.sort({ available: order });
+    try {
+        let products = await productQuery.lean().exec();
+        return products.length;
+    } catch (err) {
+        return 0;
+    }
+}
+
+
 
 module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize = 8) => {
     try {
@@ -83,18 +110,6 @@ module.exports.getProductsByCategory = async(categoryId, pageIndex = 1, pageSize
         return null;
     }
 }
-
-module.exports.getTotalPage = async(pageSize, cateId) => {
-    try {
-        var count;
-        if (ten == null) count = await model.count({});
-        else count = await model.count({ category: cateId });
-        return Math.ceil(count / pageSize);
-    } catch (e) {
-        return null;
-    }
-};
-
 module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
     try {
         const count = await model.count({ category: categoryId });
@@ -102,8 +117,4 @@ module.exports.getTotalPagecategory = async(pageSize, categoryId) => {
     } catch (e) {
         return null;
     }
-};
-
-module.exports.getProductByName = async(ten, pageIndex, pageSize) => {
-    return await model.find({ name: { $regex: ten } }).skip((pageIndex - 1) * pageSize).limit(pageSize);
 };
