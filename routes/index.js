@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
     productControllers.homepageFeatureProduct(req, res, next);
 });
 
-router.get('/add-to-cart/:id', async (req, res, next) => {
+router.get('/add-to-cart/:id', async(req, res, next) => {
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
     let product = await Product.getProductById(productId);

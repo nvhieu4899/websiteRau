@@ -45,7 +45,7 @@
 						class="form-control"></div>
 			</div>
 			<div>
-				<button type="submit" class="btn btn-success btn-sm">
+				<button type="button" class="btn btn-success btn-sm" onclick="submitForm();">
 					<i class="fa fa-dot-circle-o"></i> Tìm kiếm
 				</button>
 				<button type="reset" class="btn btn-danger btn-sm">
@@ -65,76 +65,77 @@
 				</ul>
 			</div>
 		</div>
-		<div id= "renderview">
-		<div class="row">
-			{{#each products}}
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
-							src="{{{img}}}" alt="Colorlib Template">
-						{{#if salePrice}}
-						<span class="status">SALE</span>
-						{{/if}}
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="/san-pham/chi-tiet?productId={{{_id}}}">{{{name}}}</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								{{#if salePrice}}
-								<p class="price"><span class="mr-2 price-dc">&#8363;{{{price}}}</span><span
-										class="price-sale">&#8363;{{{salePrice}}}</span></p>
-								{{else}}
-								<p class="price"><span class="mr-2 price-sale">&#8363;{{{price}}}</span></p>
-								{{/if}}
+		<div id="renderview">
+			<div class="row">
+				{{#each products}}
+				<div class="col-md-6 col-lg-3 ftco-animate">
+					<div class="product">
+						<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
+								src="{{{img}}}" alt="Colorlib Template">
+							{{#if salePrice}}
+							<span class="status">SALE</span>
+							{{/if}}
+							<div class="overlay"></div>
+						</a>
+						<div class="text py-3 pb-4 px-3 text-center">
+							<h3><a href="/san-pham/chi-tiet?productId={{{_id}}}">{{{name}}}</a></h3>
+							<div class="d-flex">
+								<div class="pricing">
+									{{#if salePrice}}
+									<p class="price"><span class="mr-2 price-dc">&#8363;{{{price}}}</span><span
+											class="price-sale">&#8363;{{{salePrice}}}</span></p>
+									{{else}}
+									<p class="price"><span class="mr-2 price-sale">&#8363;{{{price}}}</span></p>
+									{{/if}}
+								</div>
 							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#"
-									class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-menu"></i></span>
-								</a>
-								<a href="/add-to-cart/{{this._id}}" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="ion-ios-cart"></i></span>
-								</a>
-								<a href="#" class="heart d-flex justify-content-center align-items-center ">
-									<span><i class="ion-ios-heart"></i></span>
-								</a>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+									<a href="#"
+										class="add-to-cart d-flex justify-content-center align-items-center text-center">
+										<span><i class="ion-ios-menu"></i></span>
+									</a>
+									<a href="/add-to-cart/{{this._id}}"
+										class="buy-now d-flex justify-content-center align-items-center mx-1">
+										<span><i class="ion-ios-cart"></i></span>
+									</a>
+									<a href="#" class="heart d-flex justify-content-center align-items-center ">
+										<span><i class="ion-ios-heart"></i></span>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				{{/each}}
 			</div>
-			{{/each}}
-		</div>
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						{{#paginate pagination type="first"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:page({{n}})">&lt;&lt;</a>
-						</li>
-						{{/paginate}}
-						{{#paginate pagination type="previous"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:page({{n}})">&lt;</a>
-						</li>
-						{{/paginate}}
-						{{#paginate pagination type="middle" limit="7"}}
-						<li {{#if active}} class="active" {{/if}}><a href="javascript:page({{n}})">{{n}}</a></li>
-						{{/paginate}}
-						{{#paginate pagination type="next"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:page({{n}})">&gt;</a>
-						</li>
-						{{/paginate}}
-						{{#paginate pagination type="last"}}
-						<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:page({{n}})">&gt;&gt;</a>
-						</li>
-						{{/paginate}}
-					</ul>
+			<div class="row mt-5">
+				<div class="col text-center">
+					<div class="block-27">
+						<ul>
+							{{#paginate pagination type="first"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;&lt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="previous"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="middle" limit="7"}}
+							<li {{#if active}} class="active" {{/if}}><a href="javascript:submitForm({{n}})">{{n}}</a></li>
+							{{/paginate}}
+							{{#paginate pagination type="next"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;</a>
+							</li>
+							{{/paginate}}
+							{{#paginate pagination type="last"}}
+							<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;&gt;</a>
+							</li>
+							{{/paginate}}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 </section>
@@ -174,8 +175,8 @@
 	}
 </script>
 <script>
-	$("[name='filter']").submit(function (e) {
-		e.preventDefault();
+	function submitForm(page) {
+		if (!page) page= 1;
 		const sortBy = document.forms["filter"]["sortBy"].value;
 		const orderBy = document.forms["filter"]["orderBy"].value;
 		const minCost = document.forms["filter"]["minCost"].value;
@@ -190,8 +191,8 @@
 			}
 		};
 		if (!currentCate)
-			requestProduct.open("GET", "/ajax/san-pham?sortBy=" + sortBy + "?orderBy=" + orderBy + "?minCost=" + minCost + "?maxCost=" + maxCost + "?productName=" + productName, true);
-		else requestProduct.open("GET", "/ajax/san-pham/loai/" + currentCate + "?sortBy=" + sortBy + "?orderBy=" + orderBy + "?minCost=" + minCost + "?maxCost=" + maxCost + "?productName=" + productName, true);
+			requestProduct.open("GET", "/ajax/san-pham?sortBy=" + sortBy + "&orderBy=" + orderBy + "&minCost=" + minCost + "&maxCost=" + maxCost + "&productName=" + name+"&p="+page, true);
+		else requestProduct.open("GET", "/ajax/san-pham/loai/" + currentCate + "?sortBy=" + sortBy + "&orderBy=" + orderBy + "&minCost=" + minCost + "&maxCost=" + maxCost + "&productName=" + name+"&p="+page, true);
 		requestProduct.send();
-	});
+	};
 </script>
