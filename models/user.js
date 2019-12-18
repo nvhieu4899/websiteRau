@@ -16,7 +16,7 @@ var UsersSchema = new mongoose.Schema({
     },
     authen: {
         type: String,
-        default: "0"
+        default: "1"
     }
 });
 const model = mongoose.model('users', UsersSchema, 'users');

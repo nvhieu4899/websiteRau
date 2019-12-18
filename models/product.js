@@ -12,7 +12,8 @@ var product = new mongoose.Schema({
     category: { type: String, required: false }
 });
 
-const model = mongoose.model('Product', product, 'product');
+// const model = mongoose.model('Product', product, 'product');
+const model = mongoose.model('Product', product);
 model.createIndexes({ name: "text" });
 const allProduct = async() => {
     try {

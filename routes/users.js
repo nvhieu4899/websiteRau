@@ -34,3 +34,13 @@ router.get("/dang-xuat", (req, res) => {
     res.redirect("/");
 });
 module.exports = router;
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        //req.isAuthenticated() will return true if user is logged in
+        next();
+    } else{
+        // res.redirect("/login");
+        res.redirect("/");
+    }
+}
