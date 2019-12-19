@@ -1,20 +1,25 @@
 var mongoose = require('mongoose');
-const Comment = new mongoose.Model({
+const Comment = new mongoose.Schema({
     productId: { type: String, require: true },
     name: { type: String, require: true },
     detail: { type: String, require: true },
-    date: { type: Date, require: true }
+    date: { type: Number, require: true }
 });
 
-const model = mongoose.model('comment', Comment, 'comment');
+const model = mongoose.model('Comment', Comment, 'comment');
 
 module.exports.addComment = async(productId, name, detail) => {
     try {
-        await model.insert({
+        var now = new Date().getTime();
+        let commentAdd = new Comment({
             productId: productId,
             name: name,
             detail: detail,
-            date: new Date()
+            date: now
+        })
+        commentAdd.save(function(err, comm) {
+            if (err) return null;
+            else return comm;
         });
     } catch (err) {
         return null;
@@ -24,6 +29,14 @@ module.exports.getCommentsListOfAProduct = async(proId, pageIndex, pageSize) => 
     try {
         return await model.find({
             productId: proId
-        }).skip((pageIndex - 1) * pageSize).limit(pageSize);
+        }).skip((pageIndex - 1) * pageSize).limit(pageSize).lean();
     } catch (err) { return null; }
 };
+module.exports.getNumberOfCommentsOfAProduct = async(proId) => {
+    try {
+        let comments = await model.find({
+            productId: proId
+        }).lean();
+        return comments.length;
+    } catch (err) { return 0; }
+}

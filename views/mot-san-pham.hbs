@@ -86,74 +86,83 @@
 	<section class="ftco-section">
 		<div class="container">
 			<h5>Bình luận</h5>
-			<form action="" method="post">
-			<div class="row form-group">
-				<div class="col col-md-3"><label for="text-input" class=" form-control-label">Nhập tên</label></div>
-				<div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" placeholder="Text"
-						class="form-control"><small class="form-text text-muted">Nhập tên</small></div>
-			</div>
-			<div class="row form-group">
-				<div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Nội dung</label></div>
-				<div class="col-12 col-md-9">
-					<textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Content..."
-						class="form-control"></textarea>
+			<form action="" method="post" name="comment">
+				{{#unless user}}
+				<div class="row form-group">
+					<div class="col col-md-3"><label for="text-input" class=" form-control-label">Nhập tên</label></div>
+					<div class="col-12 col-md-9"><input type="text" id="text-input" name="username" placeholder="Text"
+							class="form-control"><small class="form-text text-muted">Nhập tên</small></div>
 				</div>
-			</div>
-			<div class="pull-right">
-				<button type="submit" class="btn btn-primary btn-sm">
-					<i class="fa fa-dot-circle-o"></i> Submit
-				</button>
-				<button type="reset" class="btn btn-danger btn-sm">
-					<i class="fa fa-ban"></i> Reset
-				</button>
-			</div>
+				{{/unless}}
+				<div class="row form-group">
+					<div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Nội dung</label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input name="content" id="textarea-input" rows="3" placeholder="Nội dung..."
+							class="form-control"></input>
+					</div>
+				</div>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primary btn-sm" onclick="sendComment('{{sp._id}}');">
+						<i class="fa fa-dot-circle-o"></i> Thêm bình luận
+					</button>
+				</div>
 			</form>
+			<hr>
+			<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+				<strong class="pull-left primary-font">James</strong>
+				<small class="pull-right text-muted">
+					<span class="glyphicon glyphicon-time"></span>7 mins ago</small>
+				</br>
+				<li class="ui-state-default">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+					exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
+				</br>
+				<strong class="pull-left primary-font">Taylor</strong>
+				<small class="pull-right text-muted">
+					<span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+				</br>
+				<li class="ui-state-default">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+					dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+					officia deserunt mollit anim id est laborum.</li>
+
+			</ul>
+			<hr>
 		</div>
 		</div>
 	</section>
-	<div class="container">
-		<h5>Sản phẩm cùng loại</h5>
-		<div class="row">
-			{{#each relaProducts}}
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
-							src="{{{img}}}" alt="Colorlib Template">
-						{{#if salePrice}}
-						<span class="status">SALE</span>
-						{{/if}}
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="/san-pham/chi-tiet?productId={{{_id}}}">{{{name}}}</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								{{#if salePrice}}
-								<p class="price"><span class="mr-2 price-dc">&#8363;{{{price}}}</span><span
-										class="price-sale">&#8363;{{{salePrice}}}</span></p>
-								{{else}}
-								<p class="price"><span class="mr-2 price-sale">&#8363;{{{price}}}</span></p>
-								{{/if}}
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#"
-									class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-menu"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="ion-ios-cart"></i></span>
-								</a>
-								<a href="#" class="heart d-flex justify-content-center align-items-center ">
-									<span><i class="ion-ios-heart"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<div id="commentBlock">
+		<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+			{{#each comment}}
+			<strong class="pull-left primary-font">{{name}}</strong>
+			<small class="pull-right text-muted">
+				<span class="glyphicon glyphicon-time"></span>{{time}}</small>
+			</br>
+			<li class="ui-state-default">{{detail}}</li>
+			</br>
 			{{/each}}
-		</div>
+		</ul>
 	</div>
+
 </section>
+<script>
+	var username;
+	{{#if user}}
+	username = '{{ user.username }}';
+	{{/if}}
+	function sendComment(idProduct) {
+		if (!username) username = document.forms["comment"]["username"].value;
+		var sendComment = new XMLHttpRequest();
+		sendComment.open('post', '/san-pham/binh-luan',true);
+		sendComment.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		sendComment.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var html = this.responseText;
+				 document.forms["comment"]["content"].value = '';
+			}
+		};
+		const content = document.forms["comment"]["content"].value;
+		var params = "productId="+idProduct+"&username=" + username + "&content=" + content;
+		sendComment.send(params);
+	}
+</script>

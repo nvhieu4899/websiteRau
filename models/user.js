@@ -21,14 +21,14 @@ var UsersSchema = new mongoose.Schema({
 });
 const model = mongoose.model('users', UsersSchema, 'users');
 module.exports.model = model;
-module.exports.checkIfExists = async(username) => {
+module.exports.checkIfExists = async(usr) => {
     try {
-        const user = await model.findOne({ username: username });
+        let user = await model.findOne({ username: usr });
         if (user) return true;
-        else return false;
     } catch (err) {
         return false;
     }
+    return false;
 }
 module.exports.createNewUser = async(username, email, password) => {
     bcrypt.hash(password, saltRounds, async(err, hash) => {

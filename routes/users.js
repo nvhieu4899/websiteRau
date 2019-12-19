@@ -16,7 +16,7 @@ router.get('/dang-ki', function(req, res, next) {
 });
 
 router.post('/dang-ki', function(req, res, next) {
-    userController.register(req, res, next);
+    userController.registerAjax(req, res, next);
 });
 router.get('/dang-nhap', (req, res, next) => {
     res.render('dang-nhap', { title: 'Đăng nhập', error: "" });
@@ -37,10 +37,8 @@ module.exports = router;
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
-        //req.isAuthenticated() will return true if user is logged in
         next();
-    } else{
-        // res.redirect("/login");
+    } else {
         res.redirect("/");
     }
 }

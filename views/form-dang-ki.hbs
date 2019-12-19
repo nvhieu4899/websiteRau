@@ -1,8 +1,3 @@
-<title>{{{title}}}</title>
-<link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/css/util.css">
-
-<div class="limiter">
     <div class="container-login100" id="registerForm">
         <div class="wrap-login100">
 
@@ -84,17 +79,23 @@
         if (!username) {
             isSendable = false;
         }
+        else {
+        }
         if (!email) {
             isSendable = false;
         }
         else if (!ValidateEmail(email)) {
             isSendable = false;
         }
+        else {
+        }
         if (!password) {
             isSendable = false;
         }
         else if (!validatePassword(password, retype)) {
             isSendable = false;
+        }
+        else {
         }
         if (isSendable) {
             var request = new XMLHttpRequest();

@@ -2,7 +2,7 @@ var Product = require('../models/product');
 var Category = require('../models/category');
 let Handlebars = require('../hbs');
 let PAGE_SIZE = 8;
-let TOTAL_SIZE = 3;
+var Comment = require('../models/comments');
 let singleProductController = async(req, res, next) => {
     let id = req.query.productId;
     try {
@@ -92,21 +92,6 @@ module.exports.filterAllProductController = async(req, res, next) => {
         user: req.user
     });
 };
-
-module.exports.filterAllProductController_Ajax = async(req, res, next) => {
-    const display_product = await Product.filter(req.query, PAGE_SIZE);
-    res.render('sp-box-template', {
-        products: display_product,
-        pagination: {
-            page: p,
-            pageCount: 3,
-            limit: 9,
-        },
-        layout: 'sp-box-template'
-    }, (err, html) => {
-        res.send(html);
-    });
-}
 module.exports.categoryProductController_Ajax = async(req, res, next) => {
     const cateId = req.params.id;
     let p = req.query.p;
@@ -172,3 +157,33 @@ module.exports.filterAllProductController_Ajax = async(req, res, next) => {
         res.send(html);
     });
 };
+module.exports.filterOneCategoryController_Ajax = async(req, res, next) => {
+    let p = 1;
+    if (req.query.p) p = req.query.p
+    const display_product = await Product.filter(req.query, p, PAGE_SIZE);
+    let total = await Product.filterNumber(req.query);
+    let totalPage = Math.ceil(total / PAGE_SIZE);
+
+    res.render('sp-box-template', {
+        products: display_product,
+        pagination: {
+            page: p,
+            pageCount: totalPage,
+            limit: 9
+        },
+        layout: 'sp-box-template'
+    }, (err, html) => {
+        res.send(html);
+    });
+};
+module.exports.addCommentController = async(req, res, next) => {
+    try {
+        productId = req.body.productId;
+        if (req.body.username && req.body.content) {
+            await Comment.addComment(productId, req.body.username, req.body.content);
+            res.render('index');
+        }
+    } catch (err) {
+        res.render('mot-san-pham');
+    }
+}
