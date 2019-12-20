@@ -16,7 +16,7 @@ router.get('/dang-ki', function(req, res, next) {
 });
 
 router.post('/dang-ki', function(req, res, next) {
-    userController.registerAjax(req, res, next);
+    userController(req, res, next);
 });
 router.get('/dang-nhap', (req, res, next) => {
     res.render('dang-nhap', { title: 'Đăng nhập', error: "" });
@@ -35,10 +35,3 @@ router.get("/dang-xuat", (req, res) => {
 });
 module.exports = router;
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect("/");
-    }
-}
