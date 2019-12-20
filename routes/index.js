@@ -13,15 +13,22 @@ router.get('/', (req, res, next) => {
 router.get('/add-to-cart/:id', async(req, res, next) => {
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
-    let product = await Product.getProductById(productId);
+    try {
 
-    if (product) {
-        cart.add(product, product.id);
-        req.session.cart = cart;
-        console.log(req.session.cart);
-        res.redirect('/san-pham');
-    } else {
-        res.redirect('/');
+        let product = await Product.getProductById(productId);
+
+
+        if (product) {
+            cart.add(product, product.id);
+            req.session.cart = cart;
+            console.log(req.session.cart.item);
+
+            res.send(req.session.cart.totalQty.toString());
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        throw err;
     }
 });
 
@@ -34,7 +41,7 @@ router.get('/remove/:id', (req, res, next) => {
     res.redirect('/gio-hang');
 });
 
-router.get('/gio-hang', function (req, res, next) {
+router.get('/gio-hang', function(req, res, next) {
     if (!req.session.cart) {
         return res.render('gio-hang', { products: null });
     }
@@ -49,7 +56,7 @@ router.get('/thanh-toan', isLoggedIn, function(req, res, next) {
     var cart = new Cart(req.session.cart);
     var errMsg = req.flash('error')[0];
     // res.render('thanh-toan', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
-    res.render('thanh-toan', {total: cart.totalPrice});
+    res.render('thanh-toan', { total: cart.totalPrice });
 });
 
 router.post('/thanh-toan', isLoggedIn, function(req, res, next) {
