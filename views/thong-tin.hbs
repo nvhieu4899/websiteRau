@@ -1,4 +1,4 @@
-<div class="card container">
+{{!-- <div class="card container">
     <div class="card-header">
         <strong>Thông tin khách hàng</strong>
     </div>
@@ -73,4 +73,29 @@
         </button>
     </div>
     <br>
+</div> --}}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Thông tin người dùng</h1>
+        <hr>
+        <h2>Lịch sử mua hàng</h2>
+        {{# each orders }}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{# each this.items }}
+                            <li class="list-group-item">
+                                <span class="badge">&#8363;{{ this.price }}</span>
+                                {{ this.name }} | Số lượng: {{ this.qty }} 
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <strong>Tổng đơn: &#8363;{{ this.cart.totalPrice }}</strong>
+                </div>
+            </div>
+        {{/each}}
+    </div>
 </div>
