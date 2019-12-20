@@ -95,7 +95,11 @@
 										class="add-to-cart d-flex justify-content-center align-items-center text-center">
 										<span><i class="ion-ios-menu"></i></span>
 									</a>
+<<<<<<< HEAD
 									<a href="/cart/add-to-cart/{{this._id}}"
+=======
+									<a href="javascript:addToCart('{{_id}}')"
+>>>>>>> b4452eb3a7ec86efd703947a81d8836f356ed360
 										class="buy-now d-flex justify-content-center align-items-center mx-1">
 										<span><i class="ion-ios-cart"></i></span>
 									</a>
@@ -195,4 +199,17 @@
 		else requestProduct.open("GET", "/ajax/san-pham/loai/" + currentCate + "?sortBy=" + sortBy + "&orderBy=" + orderBy + "&minCost=" + minCost + "&maxCost=" + maxCost + "&productName=" + name+"&p="+page, true);
 		requestProduct.send();
 	};
+	function addToCart(productId)
+	{
+		var request = new XMLHttpRequest();
+		request.open("GET","/add-to-cart/"+productId,true);
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200) {
+				var htmlRendered = this.responseText;
+				document.getElementById('totalQtyCart').innerText=htmlRendered;
+			}
+		}
+		request.send();
+	}
 </script>

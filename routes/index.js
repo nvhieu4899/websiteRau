@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
     productControllers.homepageFeatureProduct(req, res, next);
 });
 
+<<<<<<< HEAD
 module.exports = router;
 // router.get('/add-to-cart/:id', async(req, res, next) => {
 //     let productId = req.params.id;
@@ -25,6 +26,29 @@ module.exports = router;
 //         res.redirect('/');
 //     }
 // });
+=======
+router.get('/add-to-cart/:id', async(req, res, next) => {
+    let productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart : {});
+    try {
+
+        let product = await Product.getProductById(productId);
+
+
+        if (product) {
+            cart.add(product, product.id);
+            req.session.cart = cart;
+            console.log(req.session.cart.item);
+
+            res.send(req.session.cart.totalQty.toString());
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        throw err;
+    }
+});
+>>>>>>> b4452eb3a7ec86efd703947a81d8836f356ed360
 
 // router.get('/remove/:id', (req, res, next) => {
 //     var productId = req.params.id;
@@ -35,6 +59,7 @@ module.exports = router;
 //     res.redirect('/gio-hang');
 // });
 
+<<<<<<< HEAD
 // router.get('/gio-hang', function (req, res, next) {
 //     if (!req.session.cart) {
 //         return res.render('gio-hang', { products: null });
@@ -71,6 +96,25 @@ module.exports = router;
 //         res.redirect('/');
 //     });
 // });
+=======
+router.get('/gio-hang', function(req, res, next) {
+    if (!req.session.cart) {
+        return res.render('gio-hang', { products: null });
+    }
+    var cart = new Cart(req.session.cart);
+    res.render('gio-hang', { products: cart.generateArray(), totalPrice: cart.totalPrice });
+});
+
+router.get('/thanh-toan', isLoggedIn, function(req, res, next) {
+    if (!req.session.cart) {
+        return res.redirect('/gio-hang');
+    }
+    var cart = new Cart(req.session.cart);
+    var errMsg = req.flash('error')[0];
+    // res.render('thanh-toan', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
+    res.render('thanh-toan', { total: cart.totalPrice });
+});
+>>>>>>> b4452eb3a7ec86efd703947a81d8836f356ed360
 
 
 

@@ -85,7 +85,8 @@
 	</section>
 	<section class="ftco-section">
 		<div class="container">
-			<h5>Bình luận</h5>
+			<h2>Bình luận</h2>
+			<br>
 			<form action="" method="post" name="comment">
 				{{#unless user}}
 				<div class="row form-group">
@@ -98,8 +99,8 @@
 					<div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Nội dung</label>
 					</div>
 					<div class="col-12 col-md-9">
-						<input name="content" id="textarea-input" rows="3" placeholder="Nội dung..."
-							class="form-control"></input>
+						<textarea name="content" id="textarea-input" rows="3" placeholder="Nội dung..."
+							class="form-control"></textarea>
 					</div>
 				</div>
 				<div class="pull-right">
@@ -109,60 +110,42 @@
 				</div>
 			</form>
 			<hr>
-			<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
-				<strong class="pull-left primary-font">James</strong>
-				<small class="pull-right text-muted">
-					<span class="glyphicon glyphicon-time"></span>7 mins ago</small>
-				</br>
-				<li class="ui-state-default">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-					exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
-				</br>
-				<strong class="pull-left primary-font">Taylor</strong>
-				<small class="pull-right text-muted">
-					<span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-				</br>
-				<li class="ui-state-default">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-					dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-					officia deserunt mollit anim id est laborum.</li>
-
-			</ul>
+			<div id="commentBlock">
+				<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+					{{#each comment}}
+					<strong class="pull-left primary-font">{{name}}</strong>
+					</br>
+					<li class="ui-state-default">{{detail}}</li>
+					</br>
+					{{/each}}
+				</ul>
+			</div>
 			<hr>
 		</div>
 		</div>
 	</section>
-	<div id="commentBlock">
-		<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
-			{{#each comment}}
-			<strong class="pull-left primary-font">{{name}}</strong>
-			<small class="pull-right text-muted">
-				<span class="glyphicon glyphicon-time"></span>{{time}}</small>
-			</br>
-			<li class="ui-state-default">{{detail}}</li>
-			</br>
-			{{/each}}
-		</ul>
-	</div>
-
 </section>
 <script>
 	var username;
-	{{#if user}}
+	{ { #if user} }
 	username = '{{ user.username }}';
-	{{/if}}
-	function sendComment(idProduct) {
-		if (!username) username = document.forms["comment"]["username"].value;
-		var sendComment = new XMLHttpRequest();
-		sendComment.open('post', '/san-pham/binh-luan',true);
-		sendComment.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		sendComment.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				var html = this.responseText;
-				 document.forms["comment"]["content"].value = '';
+	{
+		{
+			/if}}
+			var productId = '{{sp._id}}';
+			function sendComment(idProduct) {
+				if (!username) username = document.forms["comment"]["username"].value;
+				var sendComment = new XMLHttpRequest();
+				sendComment.open('post', '/san-pham/binh-luan', true);
+				sendComment.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				sendComment.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var html = this.responseText;
+						document.forms["comment"]["content"].value = '';
+					}
+				};
+				const content = document.forms["comment"]["content"].value;
+				var params = "productId=" + idProduct + "&username=" + username + "&content=" + content;
+				sendComment.send(params);
 			}
-		};
-		const content = document.forms["comment"]["content"].value;
-		var params = "productId="+idProduct+"&username=" + username + "&content=" + content;
-		sendComment.send(params);
-	}
 </script>

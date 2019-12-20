@@ -9,17 +9,16 @@ var Cart = require('../models/cart');
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
+router.post('/dang-ki', function(req, res, next) {
+    userController.registerAjax(req, res, next);
+});
 
 router.get('/dang-ki', function(req, res, next) {
     res.render('dang-ki', {
         title: "Đăng kí",
-        error: ""
     });
 });
 
-router.post('/dang-ki', function(req, res, next) {
-    userController(req, res, next);
-});
 router.get('/dang-nhap', (req, res, next) => {
     res.render('dang-nhap', { title: 'Đăng nhập', error: "" });
 });
@@ -30,7 +29,7 @@ router.post('/dang-nhap', passport.authenticate('local', {
 }));
 router.get('/thong-tin', function(req, res, next) {
     // res.render('thong-tin', { title: 'Thông tin người dùng', user: req.user });
-    Order.find({user: req.user}, function(err, orders) {
+    Order.find({ user: req.user }, function(err, orders) {
         if (err) {
             return res.write('Error!');
         }
@@ -47,4 +46,3 @@ router.get("/dang-xuat", (req, res) => {
     res.redirect("/");
 });
 module.exports = router;
-

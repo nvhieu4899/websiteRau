@@ -8,11 +8,13 @@ let singleProductController = async(req, res, next) => {
     try {
         let displayProd = await Product.getProductById(id);
         let rela = await Product.relativeProduct(id);
+        let comments = await Comment.getCommentsListOfAProduct(id, 1, 10);
         res.render('mot-san-pham', {
             title: displayProd.name,
             sp: displayProd,
             relaProducts: rela,
-            user: req.user
+            user: req.user,
+            comment: comments
         });
     } catch (err) {
         next();
@@ -181,9 +183,9 @@ module.exports.addCommentController = async(req, res, next) => {
         productId = req.body.productId;
         if (req.body.username && req.body.content) {
             await Comment.addComment(productId, req.body.username, req.body.content);
-            res.render('index');
+            res.send("success")
         }
     } catch (err) {
-        res.render('mot-san-pham');
+        res.send("failure");
     }
 }

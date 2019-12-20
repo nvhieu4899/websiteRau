@@ -10,9 +10,7 @@
                 <span class="login100-form-title">
                     Đăng kí
                 </span>
-                {{#if error }}
-                <span style="color: red; font-size: 2em;">{{error}}</span>
-                {{/if}}
+                <span style="color: red; font-size: 2em;" id = "error"></span>
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
                     <input class="input100" type="text" name="username" placeholder="Tên đăng nhập" required>
                 </div>
@@ -84,11 +82,15 @@
         if (!username) {
             isSendable = false;
         }
+        else {
+        }
         if (!email) {
             isSendable = false;
         }
         else if (!ValidateEmail(email)) {
             isSendable = false;
+        }
+        else {
         }
         if (!password) {
             isSendable = false;
@@ -96,15 +98,19 @@
         else if (!validatePassword(password, retype)) {
             isSendable = false;
         }
+        else {
+        }
         if (isSendable) {
             var request = new XMLHttpRequest();
             request.open("POST", "/users/dang-ki", true);
             request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             request.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    var htmlRendered = this.responseText;
-                    document.getElementById('registerForm').innerHTML = '';
-                    $("#registerForm").html(htmlRendered);
+                    if (this.responseText == "success")
+                        window.location.href = '/users/dang-nhap';
+                    else
+                        document.getElementById("error").innerText = "Username đã tồn tại!";
+
                 }
             };
             var param = "username=" + username + "&email=" + email + "&password=" + password;
