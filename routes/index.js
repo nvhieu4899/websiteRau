@@ -25,6 +25,15 @@ router.get('/add-to-cart/:id', async(req, res, next) => {
     }
 });
 
+router.get('/remove/:id', (req, res, next) => {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    cart.removeItem(productId);
+    req.session.cart = cart;
+    res.redirect('/gio-hang');
+});
+
 router.get('/gio-hang', function (req, res, next) {
     if (!req.session.cart) {
         return res.render('gio-hang', { products: null });
