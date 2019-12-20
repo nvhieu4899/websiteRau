@@ -11,7 +11,7 @@ const model = mongoose.model('Comment', Comment, 'comment');
 module.exports.addComment = async(productId, name, detail) => {
     try {
         var now = new Date().getTime();
-        let commentAdd = new Comment({
+        let commentAdd = new model({
             productId: productId,
             name: name,
             detail: detail,
@@ -27,9 +27,12 @@ module.exports.addComment = async(productId, name, detail) => {
 };
 module.exports.getCommentsListOfAProduct = async(proId, pageIndex, pageSize) => {
     try {
-        return await model.find({
+        let comments = model.find({
             productId: proId
         }).skip((pageIndex - 1) * pageSize).limit(pageSize).lean();
+        return comments;
+
+
     } catch (err) { return null; }
 };
 module.exports.getNumberOfCommentsOfAProduct = async(proId) => {
