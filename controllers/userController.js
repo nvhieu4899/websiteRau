@@ -21,19 +21,9 @@ const register = async(req, res, next) => {
 module.exports.register = register;
 module.exports.registerAjax = async(req, res, next) => {
     if (await User.checkIfExists(req.body.username)) {
-        res.render('form-dang-ki', {
-            error: 'Username đã tồn tại!',
-            layout: 'form-dang-ki'
-        }, (err, html) => {
-            res.send(html);
-        });
+        res.send("username_duplicate");
     } else {
         await User.createNewUser(req.body.username, req.body.email, req.body.password);
-        res.render('form-dang-ki', {
-            error: 'Đăng kí thành công',
-            layout: 'form-dang-ki'
-        }, (err, html) => {
-            res.send(html);
-        });
+        res.send("success");
     }
 }
