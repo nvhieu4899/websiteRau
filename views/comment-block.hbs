@@ -1,10 +1,18 @@
 <ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
     {{#each comment}}
     <strong class="pull-left primary-font">{{name}}</strong>
-    <small class="pull-right text-muted">
-        <span class="glyphicon glyphicon-time"></span>{{date}}</small>
     </br>
     <li class="ui-state-default">{{detail}}</li>
     </br>
     {{/each}}
+</ul>
+<ul>
+    {{#paginate pagination type="previous"}}
+    <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;</a>
+    </li>
+    {{/paginate}}
+    {{#paginate pagination type="next"}}
+    <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;</a>
+    </li>
+    {{/paginate}}
 </ul>

@@ -13,7 +13,10 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/san-pham');
 const aboutRouter = require('./routes/ve-chung-toi');
+<<<<<<< HEAD
 // const cartRouter = require('./routes/gio-hang');
+=======
+>>>>>>> d92ed0961793de59c4704ca17bedc675c669317f
 const cartRouter = require('./routes/cart');
 const checkOutRouter = require('./routes/thanh-toan');
 

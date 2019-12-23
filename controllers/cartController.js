@@ -5,7 +5,7 @@ var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
 
-module.exports.addToCart =  async(req, res, next) => {
+module.exports.addToCart = async(req, res, next) => {
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
     let product = await Product.getProductById(productId);
@@ -13,10 +13,14 @@ module.exports.addToCart =  async(req, res, next) => {
     if (product) {
         cart.add(product, product.id);
         req.session.cart = cart;
+<<<<<<< HEAD
         console.log(req.session.cart);
         res.redirect('/san-pham'); 
+=======
+        res.send(cart.totalQty.toString())
+>>>>>>> d92ed0961793de59c4704ca17bedc675c669317f
     } else {
-        res.redirect('/');
+        res.send("falure");
     }
 };
 
@@ -29,7 +33,7 @@ module.exports.removeFromCart = (req, res, next) => {
     res.redirect('/cart/gio-hang');
 };
 
-module.exports.gioHang = function (req, res, next) {
+module.exports.gioHang = function(req, res, next) {
     if (!req.session.cart) {
         return res.render('gio-hang', { products: null });
     }
@@ -44,7 +48,7 @@ module.exports.getThanhToan = function(req, res, next) {
     var cart = new Cart(req.session.cart);
     var errMsg = req.flash('error')[0];
     // res.render('thanh-toan', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
-    res.render('thanh-toan', {total: cart.totalPrice});
+    res.render('thanh-toan', { total: cart.totalPrice });
 };
 
 module.exports.postThanhToan = function(req, res, next) {
@@ -66,5 +70,15 @@ module.exports.postThanhToan = function(req, res, next) {
     });
 };
 
+<<<<<<< HEAD
 // module.exports = router;
 
+=======
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect("users/dang-nhap");
+    }
+}
+>>>>>>> d92ed0961793de59c4704ca17bedc675c669317f

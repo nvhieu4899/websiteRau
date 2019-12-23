@@ -119,6 +119,17 @@
 					</br>
 					{{/each}}
 				</ul>
+				<ul>
+					{{#paginate pagination type="previous"}}
+					<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:getCommentsPage({{n}})">&lt;</a>
+					</li>
+					{{/paginate}}
+					{{#paginate pagination type="next"}}
+					<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:getCommentsPage({{n}})">&gt;</a>
+					</li>
+					{{/paginate}}
+				</ul>
+
 			</div>
 			<hr>
 		</div>
@@ -127,11 +138,9 @@
 </section>
 <script>
 	var username;
-	{ { #if user} }
+	{{#if user}}
 	username = '{{ user.username }}';
-	{
-		{
-			/if}}
+	{{/if}}
 			var productId = '{{sp._id}}';
 			function sendComment(idProduct) {
 				if (!username) username = document.forms["comment"]["username"].value;
@@ -147,5 +156,18 @@
 				const content = document.forms["comment"]["content"].value;
 				var params = "productId=" + idProduct + "&username=" + username + "&content=" + content;
 				sendComment.send(params);
+			}
+			function getCommentsPage(page)
+			{
+				var getComment = new XMLHttpRequest();
+				getComment.onreadystatechange = function()
+				{
+					if (this.readyState == 4 && this.status == 200) {
+						var html = this.responseText;
+						$("#commentBlock").html(html);
+					}
+				}
+				getComment.open("get",'/san-pham/binh-luan?productId='+productId+'&p='+page);
+				getComment.send();
 			}
 </script>

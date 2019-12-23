@@ -25,6 +25,7 @@ router.get('/dang-nhap', (req, res, next) => {
 
 router.post('/dang-nhap', passport.authenticate('local', {
     failureRedirect: '/users/dang-nhap',
+    failureFlash: 'Đăng nhập thất bại',
     successRedirect: '/'
 }));
 router.get('/thong-tin', function(req, res, next) {

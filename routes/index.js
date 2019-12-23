@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
     productControllers.homepageFeatureProduct(req, res, next);
 });
 
+<<<<<<< HEAD
 
 module.exports = router;
 // router.get('/add-to-cart/:id', async(req, res, next) => {
@@ -82,3 +83,6 @@ module.exports = router;
 //         res.redirect("users/dang-nhap");
 //     }
 // }
+=======
+module.exports = router;
+>>>>>>> d92ed0961793de59c4704ca17bedc675c669317f
