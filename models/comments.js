@@ -31,8 +31,6 @@ module.exports.getCommentsListOfAProduct = async(proId, pageIndex, pageSize) => 
             productId: proId
         }).skip((pageIndex - 1) * pageSize).limit(pageSize).lean();
         return comments;
-
-
     } catch (err) { return null; }
 };
 module.exports.getNumberOfCommentsOfAProduct = async(proId) => {

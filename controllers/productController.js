@@ -3,18 +3,27 @@ var Category = require('../models/category');
 let Handlebars = require('../hbs');
 let PAGE_SIZE = 8;
 var Comment = require('../models/comments');
+const COMMENT_PAGE_SIZE = 5;
+
 let singleProductController = async(req, res, next) => {
     let id = req.query.productId;
     try {
         let displayProd = await Product.getProductById(id);
         let rela = await Product.relativeProduct(id);
         let comments = await Comment.getCommentsListOfAProduct(id, 1, 10);
+        let numberOfComments = await Comment.getNumberOfCommentsOfAProduct(id);
+        let total_comment_page = Math.ceil(numberOfComments / COMMENT_PAGE_SIZE);
         res.render('mot-san-pham', {
             title: displayProd.name,
             sp: displayProd,
             relaProducts: rela,
             user: req.user,
-            comment: comments
+            comment: comments,
+            pagination: {
+                page: 1,
+                pageCount: total_comment_page,
+                limit: 3
+            }
         });
     } catch (err) {
         next();
@@ -69,8 +78,6 @@ module.exports.categoryProductController = async(req, res, next) => {
         throw err;
     }
 }
-
-
 module.exports.homepageFeatureProduct = async(req, res, next) => {
     let FeatureProduct = await Product.getProductAtPage(1, 8);
     res.render('index', {
@@ -187,5 +194,28 @@ module.exports.addCommentController = async(req, res, next) => {
         }
     } catch (err) {
         res.send("failure");
+    }
+}
+module.exports.getCommentsOfAProduct = async(req, res, next) => {
+    try {
+        let productId = req.query.productId;
+        let pageNum = req.query.p;
+        let comments = await Comment.getCommentsListOfAProduct(productId, pageNum, COMMENT_PAGE_SIZE);
+        let numberOfComments = await Comment.getNumberOfCommentsOfAProduct(productId);
+        let total_comment_page = Math.ceil(numberOfComments / COMMENT_PAGE_SIZE);
+        res.render('comment-block', {
+            comment: comments,
+            pagination: {
+                page: pageNum,
+                pageCount: total_comment_page,
+                limit: 3
+            },
+            layout: 'comment-block'
+        }, (err, html) => {
+            res.send(html);
+        });
+
+    } catch (err) {
+        res.sendStatus(404);
     }
 }

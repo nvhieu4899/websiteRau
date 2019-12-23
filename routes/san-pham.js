@@ -22,4 +22,9 @@ router.get('/loai/:id', async(req, res, next) => {
 
 });
 
+
+
+router.get('/binh-luan', async(req, res, next) => {
+    productController.getCommentsOfAProduct(req, res, next);
+});
 module.exports = router;

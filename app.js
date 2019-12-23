@@ -13,7 +13,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/san-pham');
 const aboutRouter = require('./routes/ve-chung-toi');
-const cartRouter = require('./routes/gio-hang');
+const cartRouter = require('./routes/cart');
 const checkOutRouter = require('./routes/thanh-toan');
 
 const ajaxRouter = require('./routes/ajax');
