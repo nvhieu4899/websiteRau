@@ -14,7 +14,7 @@ module.exports.addToCart =  async(req, res, next) => {
         cart.add(product, product.id);
         req.session.cart = cart;
         console.log(req.session.cart);
-        res.redirect('/san-pham');
+        res.redirect('/san-pham'); 
     } else {
         res.redirect('/');
     }
@@ -26,7 +26,7 @@ module.exports.removeFromCart = (req, res, next) => {
 
     cart.removeItem(productId);
     req.session.cart = cart;
-    res.redirect('/gio-hang');
+    res.redirect('/cart/gio-hang');
 };
 
 module.exports.gioHang = function (req, res, next) {
@@ -66,12 +66,5 @@ module.exports.postThanhToan = function(req, res, next) {
     });
 };
 
-module.exports = router;
+// module.exports = router;
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect("users/dang-nhap");
-    }
-}

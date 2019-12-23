@@ -13,8 +13,10 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/san-pham');
 const aboutRouter = require('./routes/ve-chung-toi');
-const cartRouter = require('./routes/gio-hang');
+// const cartRouter = require('./routes/gio-hang');
+const cartRouter = require('./routes/cart');
 const checkOutRouter = require('./routes/thanh-toan');
+
 
 const ajaxRouter = require('./routes/ajax');
 
@@ -57,9 +59,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/san-pham', productRouter);
 app.use('/ve-chung-toi', aboutRouter);
-app.use('/gio-hang', cartRouter);
+// app.use('/gio-hang', cartRouter);
 app.use('/thanh-toan', checkOutRouter);
 app.use('/ajax', ajaxRouter);
+app.use('/cart', cartRouter);
 
 
 // catch 404 and forward to error handler
