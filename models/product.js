@@ -56,6 +56,8 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
     let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost } });
     if (query.productName)
         productQuery = productQuery.where('name').regex(query.productName);
+    if (query.category)
+        productQuery = productQuery.where('category').equals(query.category);
     let order = 0;
 
     if (query.orderBy == 1) order = 1;
@@ -72,6 +74,67 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
         return await productQuery.skip(pageSize * (pageIndex - 1)).limit(pageSize).exec();
     } catch (err) {
         return null;
+    }
+}
+
+module.exports.filterWithCate = async(cateid, query, pageIndex, pageSize) => {
+    let minCost = Number.MIN_SAFE_INTEGER;
+    let maxCost = Number.MAX_SAFE_INTEGER;
+    if (query.minCost) minCost = query.minCost;
+    if (query.maxCost) minCost = query.maxCost;
+
+    let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost }, category: cateid });
+    if (query.productName)
+        productQuery = productQuery.where('name').regex(query.productName);
+    if (query.category)
+        productQuery = productQuery.where('category').equals(query.category);
+    let order = 0;
+
+    if (query.orderBy == 1) order = 1;
+    else if (query.orderBy == 2) order = -1;
+    if (order)
+        if (query.sortBy == 1)
+            productQuery = productQuery.sort({ price: order });
+        else if (query.sortBy == 2)
+        productQuery = productQuery.sort({ sold: order });
+    else
+        productQuery = productQuery.sort({ available: order });
+
+    try {
+        return await productQuery.skip(pageSize * (pageIndex - 1)).limit(pageSize).exec();
+    } catch (err) {
+        return null;
+    }
+}
+
+module.exports.filterWithCateNumber = async(cateid, query) => {
+    let minCost = Number.MIN_SAFE_INTEGER;
+    let maxCost = Number.MAX_SAFE_INTEGER;
+    if (query.minCost) minCost = query.minCost;
+    if (query.maxCost) minCost = query.maxCost;
+
+    let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost }, category: cateid });
+    if (query.productName)
+        productQuery = productQuery.where('name').regex(query.productName);
+    if (query.category)
+        productQuery = productQuery.where('category').equals(query.category);
+    let order = 0;
+
+    if (query.orderBy == 1) order = 1;
+    else if (query.orderBy == 2) order = -1;
+    if (order)
+        if (query.sortBy == 1)
+            productQuery = productQuery.sort({ price: order });
+        else if (query.sortBy == 2)
+        productQuery = productQuery.sort({ sold: order });
+    else
+        productQuery = productQuery.sort({ available: order });
+
+    try {
+        let products = await productQuery.lean().exec();
+        return products.length;
+    } catch (err) {
+        return 0;
     }
 }
 

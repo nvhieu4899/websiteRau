@@ -43,5 +43,4 @@ module.exports.createNewUser = async(username, email, password) => {
             return false;
         }
     });
-
 };

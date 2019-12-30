@@ -140,6 +140,7 @@
 	</div>
 </section>
 <script>
+	
 	var currentCate = 0;
 </script>
 <script>
@@ -155,22 +156,6 @@
 			}
 		};
 		requestProduct.open("GET", "/ajax/san-pham/loai/" + cateId, true);
-		requestProduct.send();
-	}
-</script>
-<script>
-	function page(pageIndex) {
-		var requestProduct = new XMLHttpRequest();
-		requestProduct.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				var htmlRendered = this.responseText;
-				document.getElementById('renderview').innerHTML = '';
-				$("#renderview").html(htmlRendered);
-			}
-		};
-		if (!currentCate)
-			requestProduct.open("GET", "/ajax/san-pham?p=" + pageIndex, true);
-		else requestProduct.open("GET", "/ajax/san-pham/loai/" + currentCate + "?p=" + pageIndex, true);
 		requestProduct.send();
 	}
 </script>

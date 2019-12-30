@@ -62,7 +62,7 @@ module.exports.categoryProductController = async(req, res, next) => {
     try {
         const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
         const cates = await Category.getAllCategories();
-        const TOTAL_SIZE = await Product.getTotalPage(PAGE_SIZE, cateId);
+        const TOTAL_SIZE = await Product.getTotalPagecategory(PAGE_SIZE, cateId);
         res.render('san-pham', {
             title: 'Sản phẩm',
             products: display_product,
@@ -86,29 +86,13 @@ module.exports.homepageFeatureProduct = async(req, res, next) => {
         user: req.user
     });
 };
-module.exports.filterAllProductController = async(req, res, next) => {
-    const display_product = await Product.filter(req.query, PAGE_SIZE);
-    const categories = await Category.getAllCategories();
-    res.render('san-pham', {
-        title: 'Sản phẩm',
-        products: display_product,
-        categorys: categories,
-        pagination: {
-            page: 1,
-            pageCount: 3,
-            limit: 4
-        },
-        user: req.user
-    });
-};
 module.exports.categoryProductController_Ajax = async(req, res, next) => {
     const cateId = req.params.id;
     let p = req.query.p;
     if (!p) p = 1;
     try {
         const display_product = await Product.getProductsByCategory(cateId, p, PAGE_SIZE);
-        const cates = await Category.getAllCategories();
-        let total = Math.ceil(display_product.length / PAGE_SIZE);
+        let total = await Product.getTotalPagecategory(PAGE_SIZE, cateId);
         res.render('sp-box-template', {
             products: display_product,
             pagination: {
@@ -116,6 +100,7 @@ module.exports.categoryProductController_Ajax = async(req, res, next) => {
                 pageCount: total,
                 limit: 9
             },
+            Cate: cateId,
             layout: 'sp-box-template'
         }, (err, html) => {
             res.send(html);
@@ -128,7 +113,6 @@ module.exports.allProduct_ajax = async(req, res, next) => {
     let p = req.query.p;
     if (!p) p = 1;
     try {
-        const category = await Category.getAllCategories();
         const display_product = await Product.getProductAtPage(p, PAGE_SIZE);
         let total = await Product.allProductNumber();
         let totalPage = Math.ceil(total / PAGE_SIZE);
@@ -153,7 +137,6 @@ module.exports.filterAllProductController_Ajax = async(req, res, next) => {
     const display_product = await Product.filter(req.query, p, PAGE_SIZE);
     let total = await Product.filterNumber(req.query);
     let totalPage = Math.ceil(total / PAGE_SIZE);
-
     res.render('sp-box-template', {
         products: display_product,
         pagination: {
@@ -169,10 +152,9 @@ module.exports.filterAllProductController_Ajax = async(req, res, next) => {
 module.exports.filterOneCategoryController_Ajax = async(req, res, next) => {
     let p = 1;
     if (req.query.p) p = req.query.p
-    const display_product = await Product.filter(req.query, p, PAGE_SIZE);
-    let total = await Product.filterNumber(req.query);
+    const display_product = await Product.filterWithCate(req.params.id, req.query, p, PAGE_SIZE);
+    let total = await Product.filterWithCateNumber(req.params.id, req.query);
     let totalPage = Math.ceil(total / PAGE_SIZE);
-
     res.render('sp-box-template', {
         products: display_product,
         pagination: {
