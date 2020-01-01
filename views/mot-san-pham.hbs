@@ -91,7 +91,7 @@
 				{{#unless user}}
 				<div class="row form-group">
 					<div class="col col-md-3"><label for="text-input" class=" form-control-label">Nhập tên</label></div>
-					<div class="col-12 col-md-9"><input type="text" id="text-input" name="username" placeholder="Text"
+					<div class="col-12 col-md-9"><input type="text" id="text-input" name="username" placeholder="Tên"
 							class="form-control"><small class="form-text text-muted">Nhập tên</small></div>
 				</div>
 				{{/unless}}
@@ -119,6 +119,10 @@
 					</br>
 					{{/each}}
 				</ul>
+				<div class="row">
+					<div class="col text-center">
+						<div class="block-27">
+
 				<ul>
 					{{#paginate pagination type="previous"}}
 					<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:getCommentsPage({{n}})">&lt;</a>
@@ -129,6 +133,9 @@
 					</li>
 					{{/paginate}}
 				</ul>
+				</div>
+				</div>
+						</div>
 
 			</div>
 			<hr>
@@ -141,7 +148,23 @@
 	{{#if user}}
 	username = '{{ user.username }}';
 	{{/if}}
+
 			var productId = '{{sp._id}}';
+						function getCommentsPage(page)
+			{
+				var getComment = new XMLHttpRequest();
+				getComment.onreadystatechange = function()
+				{
+					if (this.readyState == 4 && this.status == 200) {
+						var html = this.responseText;
+						$("#commentBlock").html('');
+						$("#commentBlock").html(html);
+						
+					}
+				}
+				getComment.open("get",'/san-pham/binh-luan?productId='+productId+'&p='+page);
+				getComment.send();
+			}
 			function sendComment(idProduct) {
 				if (!username) username = document.forms["comment"]["username"].value;
 				var sendComment = new XMLHttpRequest();
@@ -151,23 +174,12 @@
 					if (this.readyState == 4 && this.status == 200) {
 						var html = this.responseText;
 						document.forms["comment"]["content"].value = '';
+						getCommentsPage(1);
 					}
 				};
 				const content = document.forms["comment"]["content"].value;
 				var params = "productId=" + idProduct + "&username=" + username + "&content=" + content;
 				sendComment.send(params);
 			}
-			function getCommentsPage(page)
-			{
-				var getComment = new XMLHttpRequest();
-				getComment.onreadystatechange = function()
-				{
-					if (this.readyState == 4 && this.status == 200) {
-						var html = this.responseText;
-						$("#commentBlock").html(html);
-					}
-				}
-				getComment.open("get",'/san-pham/binh-luan?productId='+productId+'&p='+page);
-				getComment.send();
-			}
+
 </script>

@@ -6,13 +6,19 @@
     </br>
     {{/each}}
 </ul>
-<ul>
-    {{#paginate pagination type="previous"}}
-    <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;</a>
-    </li>
-    {{/paginate}}
-    {{#paginate pagination type="next"}}
-    <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;</a>
-    </li>
-    {{/paginate}}
-</ul>
+<div class="row">
+<div class="col text-center">
+    <div class="block-27">
+
+    <ul>
+        {{#paginate pagination type="previous"}}
+        <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:getCommentsPage({{n}})">&lt;</a>
+        </li>
+        {{/paginate}}
+        {{#paginate pagination type="next"}}
+        <li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:getCommentsPage({{n}})">&gt;</a>
+        </li>
+        {{/paginate}}
+    </ul>
+</div></div>
+</div>

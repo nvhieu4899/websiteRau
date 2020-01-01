@@ -10,7 +10,7 @@ let singleProductController = async(req, res, next) => {
     try {
         let displayProd = await Product.getProductById(id);
         let rela = await Product.relativeProduct(id);
-        let comments = await Comment.getCommentsListOfAProduct(id, 1, 10);
+        let comments = await Comment.getCommentsListOfAProduct(id, 1, COMMENT_PAGE_SIZE);
         let numberOfComments = await Comment.getNumberOfCommentsOfAProduct(id);
         let total_comment_page = Math.ceil(numberOfComments / COMMENT_PAGE_SIZE);
         res.render('mot-san-pham', {
@@ -181,7 +181,8 @@ module.exports.addCommentController = async(req, res, next) => {
 module.exports.getCommentsOfAProduct = async(req, res, next) => {
     try {
         let productId = req.query.productId;
-        let pageNum = req.query.p;
+        let pageNum = 1;
+        if (req.query.p) pageNum = req.query.p;
         let comments = await Comment.getCommentsListOfAProduct(productId, pageNum, COMMENT_PAGE_SIZE);
         let numberOfComments = await Comment.getNumberOfCommentsOfAProduct(productId);
         let total_comment_page = Math.ceil(numberOfComments / COMMENT_PAGE_SIZE);
