@@ -31,7 +31,7 @@ module.exports.modifyUserInfo = async(req, res, next) => {
     let updateEmail = req.body.email ? req.body.email : req.user.email;
     let updateGender = req.body.gender ? req.body.gender : req.user.gender;
     let updateAddress = req.body.address ? req.body.address : req.user.address;
-    let updateFullname = req.body.address ? req.body.address : req.user.address;
+    let updateFullname = req.body.fullname ? req.body.fullname : req.user.fullname;
     if (await User.checkIfExistedEmail(req.user._id, updateEmail)) {
         res.send("used-email");
         return;
