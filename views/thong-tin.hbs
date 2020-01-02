@@ -21,14 +21,14 @@
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="email" class=" form-control-label">Email</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="email" id="email-input" name="email-input"
+                        <div class="col-12 col-md-9"><input type="email" id="email-input" name="email"
                                 value="{{user.email}}" placeholder="example@gmail.com" class="form-control"><small
                                 class="help-block form-text"></small><span id="email-error"></span></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Địa
+                        <div class="col col-md-3"><label for="textarea-input" class=" form-control-label" >Địa
                                 chỉ</label></div>
-                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9"
+                        <div class="col-12 col-md-9"><textarea name="address" id="textarea-input" rows="9"
                                 placeholder="Địa chỉ" class="form-control">{{user.address}}</textarea></div>
                     </div>
                     <div class="row form-group">
@@ -44,7 +44,7 @@
                 </form>
             </div>
             <div class="card-footer text-center">
-                <button type="button" onclick="sendUpdateUserInfo();" class="btn btn-primary btn-lg">
+                <button type="button" onclick="sendUpdateUserInfo()" class="btn btn-primary btn-lg">
                     <i class="fa fa-dot-circle-o"></i> Cập nhật
                 </button>
                 <div id="message-info"></div>
@@ -100,7 +100,7 @@
                 </form>
             </div>
             <div class="card-footer text-center">
-                <button type="button" class="btn btn-primary btn-lg" onclick="sendUpdatePassword();">
+                <button type="button" class="btn btn-primary btn-lg" onclick="sendUpdatePassword()">
                     <i class="fa fa-dot-circle-o"></i> Cập nhật
                 </button>
                 <div id="message-success"></div>
@@ -119,13 +119,13 @@
         }
         return (false);
     }
-    </script>
-    <script>
-function sendUpdateUserInfo() {
+</script>
+<script>
+    function sendUpdateUserInfo() {
         let fullname = document.forms["modify"]["fullname"].value;
         let address = document.forms["modify"]["address"].value;
         let email = document.forms["modify"]["email"].value;
-        if (!ValidateEmail(mail)) {
+        if (!ValidateEmail(email)) {
             $("#email-error").text("Email không hợp lệ");
             return;
         }
@@ -133,7 +133,7 @@ function sendUpdateUserInfo() {
         let gender = document.forms["modify"]["gender"].value;
         let param = "fullname=" + fullname + "&address=" + address + "&email=" + email + "&gender=" + gender;
         let request = new XMLHttpRequest();
-        request.open('POST', '/user/thong-tin/update-info', true);
+        request.open('POST', '/users/thong-tin/update-info', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -150,8 +150,8 @@ function sendUpdateUserInfo() {
         }
         request.send(param);
     }
-    </script>
-    <script>
+</script>
+<script>
     function sendUpdatePassword() {
         let password = document.forms["updatePassword"]["password"].value;
         let newPass = document.forms["updatePassword"]["new-password-input"].value;

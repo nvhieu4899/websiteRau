@@ -83,5 +83,12 @@ module.exports.findUserById = async(userid) => {
     }
 }
 module.exports.checkIfExistedEmail = async(usrId, mail) => {
-    return await model.exists({ email: mail, $ne: { _id: usrId } });
+    try {
+        let usr = model.findOne({ email: mail }).lean();
+        if (usr._id === usrId) {
+            return true;
+        } else return false;
+    } catch (err) {
+        return false;
+    }
 }

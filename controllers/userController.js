@@ -32,11 +32,11 @@ module.exports.modifyUserInfo = async(req, res, next) => {
     let updateGender = req.body.gender ? req.body.gender : req.user.gender;
     let updateAddress = req.body.address ? req.body.address : req.user.address;
     let updateFullname = req.body.address ? req.body.address : req.user.address;
-    if (await User.checkIfExistedEmail(updateEmail)) {
+    if (await User.checkIfExistedEmail(req.user._id, updateEmail)) {
         res.send("used-email");
-        next();
+        return;
     }
-    if (await User.updateInfoUser()) {
+    if (await User.updateInfoUser(req.user._id, updateFullname, updateEmail, updateAddress, updateGender)) {
         res.send("success");
     } else {
         res.send("failure");
