@@ -10,6 +10,7 @@ let singleProductController = async(req, res, next) => {
     try {
         let displayProd = await Product.getProductById(id);
         let rela = await Product.relativeProduct(id);
+        rela = rela.slice(0, 4);
         let comments = await Comment.getCommentsListOfAProduct(id, 1, COMMENT_PAGE_SIZE);
         let numberOfComments = await Comment.getNumberOfCommentsOfAProduct(id);
         let total_comment_page = Math.ceil(numberOfComments / COMMENT_PAGE_SIZE);

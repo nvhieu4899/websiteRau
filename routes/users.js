@@ -29,21 +29,37 @@ router.post('/dang-nhap', passport.authenticate('local', {
     successRedirect: '/'
 }));
 router.get('/thong-tin', function(req, res, next) {
-    // res.render('thong-tin', { title: 'Thông tin người dùng', user: req.user });
-    Order.find({ user: req.user }, function(err, orders) {
-        if (err) {
-            return res.write('Error!');
-        }
-        var cart;
-        orders.forEach(function(order) {
-            cart = new Cart(order.cart);
-            order.items = cart.generateArray();
+    if (req.isAuthenticated()) {
+        // res.render('thong-tin', { title: 'Thông tin người dùng', user: req.user });
+        Order.find({ user: req.user }, function(err, orders) {
+            if (err) {
+                return res.write('Error!');
+            }
+            var cart;
+            orders.forEach(function(order) {
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            });
+            res.render('thong-tin', { user: req.user, orders: orders });
         });
-        res.render('thong-tin', { orders: orders });
-    });
+    } else {
+        res.redirect('/users/dang-nhap');
+    }
 });
+router.post('/thong-tin/update-info', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        userController.modifyUserInfo(req, res, next);
+    } else {
+        res.send("Unauthenticated");
+    }
+})
 router.get("/dang-xuat", (req, res) => {
     req.logout();
     res.redirect("/");
 });
+router.post('/thong-tin/password', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        userController.updatePass(req, res, next);
+    } else res.send("Unauthenticated");
+})
 module.exports = router;

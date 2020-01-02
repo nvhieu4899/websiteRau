@@ -14,7 +14,7 @@ module.exports.addToCart = async(req, res, next) => {
         cart.add(product, product.id);
         req.session.cart = cart;
         console.log(req.session.cart);
-        res.redirect('/san-pham'); 
+        res.redirect('/san-pham');
     } else {
         res.send("failure");
     }
@@ -60,10 +60,7 @@ module.exports.postThanhToan = function(req, res, next) {
         phone: req.body.phone
     });
     order.save(function(err, result) {
-        // req.flash('success', 'Successfully bought product!');
         req.session.cart = null;
         res.redirect('/');
     });
 };
-
-

@@ -17,6 +17,15 @@ var UsersSchema = new mongoose.Schema({
     authen: {
         type: String,
         default: "1"
+    },
+    fullname: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    gender: {
+        type: Boolean
     }
 });
 const model = mongoose.model('users', UsersSchema, 'users');
@@ -44,3 +53,35 @@ module.exports.createNewUser = async(username, email, password) => {
         }
     });
 };
+module.exports.updateInfoUser = async(userid, fullname, email, address, gender) => {
+    try {
+        await model.findByIdAndUpdate(userid, {
+            fullname: fullname,
+            email: email,
+            address: address,
+            gender: gender
+        });
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+module.exports.updatePassword = async(userid, password) => {
+    try {
+        let newpass = bcrypt.hashSync(password, saltRounds);
+        await model.findByIdAndUpdate(userid, { password: newpass });
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+module.exports.findUserById = async(userid) => {
+    try {
+        return await model.findById(userid).lean();
+    } catch (err) {
+        return null;
+    }
+}
+module.exports.checkIfExistedEmail = async(usrId, mail) => {
+    return await model.exists({ email: mail, $ne: { _id: usrId } });
+}

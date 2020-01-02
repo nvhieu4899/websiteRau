@@ -27,3 +27,27 @@ module.exports.registerAjax = async(req, res, next) => {
         res.send("success");
     }
 }
+module.exports.modifyUserInfo = async(req, res, next) => {
+    let updateEmail = req.body.email ? req.body.email : req.user.email;
+    let updateGender = req.body.gender ? req.body.gender : req.user.gender;
+    let updateAddress = req.body.address ? req.body.address : req.user.address;
+    let updateFullname = req.body.address ? req.body.address : req.user.address;
+    if (await User.checkIfExistedEmail(updateEmail)) {
+        res.send("used-email");
+        next();
+    }
+    if (await User.updateInfoUser()) {
+        res.send("success");
+    } else {
+        res.send("failure");
+    }
+}
+module.exports.updatePass = async(req, res, next) => {
+    console.log(req.user);
+    if (!bcrypt.compareSync(req.body.password, req.user.password)) {
+        res.send("Wrong pass");
+    } else {
+        await User.updatePassword(req.user._id, req.body.newpass);
+        res.send("success");
+    }
+}

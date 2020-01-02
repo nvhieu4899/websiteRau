@@ -1,101 +1,206 @@
-{{!-- <div class="card container">
-    <div class="card-header">
-        <strong>Thông tin khách hàng</strong>
-    </div>
-    <div class="card-body card-block">
-        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-            <div class="row form-group">
-                <div class="col col-md-3"><label class=" form-control-label">Tên đăng nhập</label></div>
-                <div class="col-12 col-md-9">
-                    <p class="form-control-static">{{user.username}}</p>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Họ</label></div>
-                <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" placeholder="Nguyễn"
-                        class="form-control"><small class="form-text text-muted">This is a help text</small></div>
-            </div>
-                        <div class="row form-group">
-                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tên</label></div>
-                <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" placeholder="Văn A"
-                        class="form-control"></div>
-            </div>
-            <div class="row form-group">
-                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Email</label></div>
-                <div class="col-12 col-md-9"><input type="email" id="email-input" name="email-input"
-                        placeholder="example@gmail.com" class="form-control"><small class="help-block form-text">Nhập địa chỉ email của bạn</small></div>
-            </div>
-
-            <div class="row form-group">
-                <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Địa chỉ</label></div>
-                <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9"
-                        placeholder="Địa chỉ" class="form-control"></textarea></div>
-            </div>
-            <div class="row form-group">
-                <div class="col col-md-3"><label for="select" class=" form-control-label">Giới tính</label></div>
-                <div class="col-12 col-md-9">
-                    <select name="select" id="select" class="form-control">
-                        <option value="0">Nam</option>
-                        <option value="1">Nữ</option>
-                    </select>
-                </div>
-            </div>
-                                            <div class="form-group">
-                                    <label class=" form-control-label">Ngày tháng năm sinh</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control">
-                                    </div>
-                                    <small class="form-text text-muted">Ví dụ. 25/12/1999</small>
-                                </div>
-            <div class="row form-group">
-                <div class="col col-md-3"><label for="password-input" class=" form-control-label">Mật khẩu hiện tại</label></div>
-                <div class="col-12 col-md-9"><input type="password" id="password-input" name="password-input"
-                        placeholder="Password" class="form-control"></div>
-            </div>
-                        <div class="row form-group">
-                <div class="col col-md-3"><label for="password-input" class=" form-control-label">Mật khẩu mới</label></div>
-                <div class="col-12 col-md-9"><input type="password" id="password-input" name="password-input"
-                        placeholder="Password" class="form-control"></div>
-            </div>            <div class="row form-group">
-                <div class="col col-md-3"><label for="password-input" class=" form-control-label">Nhập lại mật khẩu mới</label></div>
-                <div class="col-12 col-md-9"><input type="password" id="password-input" name="password-input"
-                        placeholder="Password" class="form-control"></div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer text-center">
-        <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fa fa-dot-circle-o"></i> Lưu
-        </button>
-        <button type="reset" class="btn btn-danger btn-sm">
-            <i class="fa fa-ban"></i> Huỷ
-        </button>
-    </div>
-    <br>
-</div> --}}
-
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h1>Thông tin người dùng</h1>
+        <div class="card">
+            <div class="card-header">
+                <strong>Thông tin khách hàng</strong>
+            </div>
+            <div class="card-body card-block">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal" name="modify">
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label class=" form-control-label">Tên đăng nhập</label></div>
+                        <div class="col-12 col-md-9">
+                            <p class="form-control-static">{{user.username}}</p>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Họ và tên</label>
+                        </div>
+                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="fullname" placeholder=""
+                                autocapitalize="sentences" value="{{user.fullname}}" class="form-control"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="email" class=" form-control-label">Email</label>
+                        </div>
+                        <div class="col-12 col-md-9"><input type="email" id="email-input" name="email-input"
+                                value="{{user.email}}" placeholder="example@gmail.com" class="form-control"><small
+                                class="help-block form-text"></small><span id="email-error"></span></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Địa
+                                chỉ</label></div>
+                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9"
+                                placeholder="Địa chỉ" class="form-control">{{user.address}}</textarea></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="select" class=" form-control-label">Giới tính</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <select name="gender" id="select" class="form-control">
+                                <option value="0" {{#unless user.gender}} selected="selected" {{/unless}}>Nam</option>
+                                <option value="1" {{#if user.gender}} selected="selected" {{/if}}>Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <button type="button" onclick="sendUpdateUserInfo();" class="btn btn-primary btn-lg">
+                    <i class="fa fa-dot-circle-o"></i> Cập nhật
+                </button>
+                <div id="message-info"></div>
+            </div>
+        </div>
         <hr>
         <h2>Lịch sử mua hàng</h2>
         {{# each orders }}
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {{# each this.items }}
-                            <li class="list-group-item">
-                                <span class="badge">&#8363;{{ this.price }}</span>
-                                {{ this.name }} | Số lượng: {{ this.qty }} 
-                            </li>
-                        {{/each}}
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <strong>Tổng đơn: &#8363;{{ this.cart.totalPrice }}</strong>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="list-group">
+                    {{# each this.items }}
+                    <li class="list-group-item">
+                        <span class="badge">&#8363;{{ this.price }}</span>
+                        {{ this.name }} | Số lượng: {{ this.qty }}
+                    </li>
+                    {{/each}}
+                </ul>
             </div>
+            <div class="panel-footer">
+                <strong>Tổng đơn: &#8363;{{ this.cart.totalPrice }}</strong>
+            </div>
+        </div>
         {{/each}}
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <strong>Cập nhật password</strong>
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal"
+                    name="updatePassword">
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="password-input1" class=" form-control-label">Mật khẩu hiện
+                                tại</label></div>
+                        <div class="col-12 col-md-9"><input type="password" id="password-input1" name="password"
+                                placeholder="Password" class="form-control"><span id="password-error"></span></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="password-input2" class=" form-control-label">Mật khẩu
+                                mới</label></div>
+                        <div class="col-12 col-md-9"><input type="password" id="password-input2"
+                                name="new-password-input" placeholder="Password" class="form-control"><span
+                                id="newpass"></span></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="password-input3" class=" form-control-label">Nhập lại mật
+                                khẩu mới</label></div>
+                        <div class="col-12 col-md-9"><input type="password" id="password-input3"
+                                name="new-password-input-retype" placeholder="Password" class="form-control"><span
+                                id="retypepass"></span></div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <button type="button" class="btn btn-primary btn-lg" onclick="sendUpdatePassword();">
+                    <i class="fa fa-dot-circle-o"></i> Cập nhật
+                </button>
+                <div id="message-success"></div>
+            </div>
+        </div>
+
+        <br>
     </div>
 </div>
+</div>
+<script>
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true);
+        }
+        return (false);
+    }
+    </script>
+    <script>
+function sendUpdateUserInfo() {
+        let fullname = document.forms["modify"]["fullname"].value;
+        let address = document.forms["modify"]["address"].value;
+        let email = document.forms["modify"]["email"].value;
+        if (!ValidateEmail(mail)) {
+            $("#email-error").text("Email không hợp lệ");
+            return;
+        }
+        $("#email-error").text("");
+        let gender = document.forms["modify"]["gender"].value;
+        let param = "fullname=" + fullname + "&address=" + address + "&email=" + email + "&gender=" + gender;
+        let request = new XMLHttpRequest();
+        request.open('POST', '/user/thong-tin/update-info', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText === "used-email") {
+                    $("#email-error").text("Email đã được sử dụng bởi một người dùng khác");
+                }
+                else if (this.responseText == "success") {
+                    $("#message-info").text("Thành công");
+                }
+                else {
+                    $("#message-info").text("Thất bại");
+                }
+            }
+        }
+        request.send(param);
+    }
+    </script>
+    <script>
+    function sendUpdatePassword() {
+        let password = document.forms["updatePassword"]["password"].value;
+        let newPass = document.forms["updatePassword"]["new-password-input"].value;
+        let newPassRetype = document.forms["updatePassword"]["new-password-input-retype"].value;
+        if (!password) {
+            $('#password-error').text('Không được để trống trường này');
+            return;
+        }
+        $('#password-error').text('');
+        if (password.length < 6) {
+            $('#password-error').text('Password không đủ dài');
+            return;
+        }
+        $('#password-error').text('');
+        if (newPass === password) {
+            $('#newpass').text('Password mới phải khác với password cũ');
+            return;
+        }
+        $('#newpass').text('');
+
+        if (newPass.length < 6) {
+            $('#newpass').text('Mật khẩu mới phải dài hơn 6 kí tự');
+            return;
+        }
+        $('#newpass').text('');
+        if (newPass !== newPassRetype) {
+
+            $('#retypepass').text('Không khớp với mật khẩu mới');
+            return;
+        }
+        $('#retypepass').text('');
+        let request = new XMLHttpRequest();
+        request.open('post', '/users/thong-tin/password', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        let param = 'password=' + password + '&newpass=' + newPass;
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText === "success") {
+                    $('#password-error').text('');
+                    $('input[name ="password"]').val('');
+                    $('input[name ="new-password-input"]').val('');
+                    $('input[name ="new-password-input-retype"]').val('');
+                    $('#message-success').text('Sửa mật khẩu thành công');
+                }
+                else {
+                    $('#password-error').text('Password không đúng');
+                }
+            }
+        }
+        request.send(param);
+    }
+</script>
