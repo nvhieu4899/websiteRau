@@ -153,8 +153,8 @@
 				{{#each products}}
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid" src="{{{img}}}"
-								alt="Colorlib Template">
+						<a href="/san-pham/chi-tiet?productId={{{_id}}}" class="img-prod"><img class="img-fluid"
+								src="{{{img}}}" alt="Colorlib Template">
 							{{#if salePrice}}
 							<span class="status">SALE</span>
 							{{/if}}
@@ -178,7 +178,8 @@
 										class="add-to-cart d-flex justify-content-center align-items-center text-center">
 										<span><i class="ion-ios-menu"></i></span>
 									</a>
-									<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<a href="javascript:addToCart('{{this._id}}')"
+										class="buy-now d-flex justify-content-center align-items-center mx-1">
 										<span><i class="ion-ios-cart"></i></span>
 									</a>
 									<a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -213,3 +214,18 @@
 			</div>
 		</div>
 	</section>
+	<script>
+			function addToCart(productId)
+	{
+		var request = new XMLHttpRequest();
+		request.open("GET","/cart/add-to-cart/"+productId,true);
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200) {
+				var htmlRendered = this.responseText;
+				$('#totalQtyCart').text(htmlRendered);
+			}
+		}
+		request.send();
+	}
+	</script>
