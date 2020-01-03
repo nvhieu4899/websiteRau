@@ -95,7 +95,7 @@
 										class="add-to-cart d-flex justify-content-center align-items-center text-center">
 										<span><i class="ion-ios-menu"></i></span>
 									</a>
-									<a href="/cart/add-to-cart/{{this._id}}"
+									<a href="javascript:addToCart('{{this._id}}')"
 										class="buy-now d-flex justify-content-center align-items-center mx-1">
 										<span><i class="ion-ios-cart"></i></span>
 									</a>
@@ -183,12 +183,12 @@
 	function addToCart(productId)
 	{
 		var request = new XMLHttpRequest();
-		request.open("GET","gio-hang/add-to-cart/"+productId,true);
+		request.open("GET","/cart/add-to-cart/"+productId,true);
 		request.onreadystatechange = function()
 		{
 			if (this.readyState == 4 && this.status == 200) {
 				var htmlRendered = this.responseText;
-				document.getElementById('totalQtyCart').innerText=htmlRendered;
+				$('#totalQtyCart').text(htmlRendered);
 			}
 		}
 		request.send();

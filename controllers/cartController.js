@@ -9,12 +9,11 @@ module.exports.addToCart = async(req, res, next) => {
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
     let product = await Product.getProductById(productId);
-
     if (product) {
         cart.add(product, product.id);
         req.session.cart = cart;
         console.log(req.session.cart);
-        res.redirect('/san-pham');
+        res.send(req.session.cart.totalQty.toString());
     } else {
         res.send("failure");
     }
@@ -58,7 +57,8 @@ module.exports.postThanhToan = function(req, res, next) {
         name: req.body.name,
         address: req.body.address,
         phone: req.body.phone,
-        date: new Date()
+        date: new Date(),
+        status: 0
     });
     order.save(function(err, result) {
         req.session.cart = null;
