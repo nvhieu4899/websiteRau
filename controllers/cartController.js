@@ -57,7 +57,8 @@ module.exports.postThanhToan = function(req, res, next) {
         cart: cart,
         name: req.body.name,
         address: req.body.address,
-        phone: req.body.phone
+        phone: req.body.phone,
+        date: new Date()
     });
     order.save(function(err, result) {
         req.session.cart = null;

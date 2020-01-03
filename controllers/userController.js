@@ -43,7 +43,6 @@ module.exports.modifyUserInfo = async(req, res, next) => {
     }
 }
 module.exports.updatePass = async(req, res, next) => {
-    console.log(req.user);
     if (!bcrypt.compareSync(req.body.password, req.user.password)) {
         res.send("Wrong pass");
     } else {
