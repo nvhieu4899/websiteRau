@@ -7,7 +7,7 @@ const register = async(req, res, next) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        authen: "1"
+        authen: "0"
     });
     if (await User.checkIfExists(req.body.username)) {
         res.render('dang-ki', {
