@@ -14,11 +14,6 @@ const usersRouter = require('./routes/users');
 const productRouter = require('./routes/san-pham');
 const aboutRouter = require('./routes/ve-chung-toi');
 const cartRouter = require('./routes/cart');
-const cart_Router = require('./routes/gio-hang');
-
-const checkOutRouter = require('./routes/thanh-toan');
-
-
 const ajaxRouter = require('./routes/ajax');
 
 mongoose.connect('mongodb+srv://customer:' + encodeURI('0766976947') + '@doanckweb-f3fht.mongodb.net/CustomerSite', { useNewUrlParser: true }, function(err) {
@@ -60,8 +55,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/san-pham', productRouter);
 app.use('/ve-chung-toi', aboutRouter);
-app.use('/gio-hang', cart_Router);
-app.use('/thanh-toan', checkOutRouter);
 app.use('/ajax', ajaxRouter);
 app.use('/cart', cartRouter);
 
