@@ -51,7 +51,7 @@ module.exports.filter = async(query, pageIndex, pageSize) => {
     let minCost = Number.MIN_SAFE_INTEGER;
     let maxCost = Number.MAX_SAFE_INTEGER;
     if (query.minCost) minCost = query.minCost;
-    if (query.maxCost) minCost = query.maxCost;
+    if (query.maxCost) maxCost = query.maxCost;
 
     let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost } });
     if (query.productName)
@@ -81,7 +81,7 @@ module.exports.filterWithCate = async(cateid, query, pageIndex, pageSize) => {
     let minCost = Number.MIN_SAFE_INTEGER;
     let maxCost = Number.MAX_SAFE_INTEGER;
     if (query.minCost) minCost = query.minCost;
-    if (query.maxCost) minCost = query.maxCost;
+    if (query.maxCost) maxCost = query.maxCost;
 
     let productQuery = model.find({ price: { $lte: maxCost, $gte: minCost }, category: cateid });
     if (query.productName)
