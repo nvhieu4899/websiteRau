@@ -26,7 +26,8 @@
 						<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 							<span><i class="ion-ios-menu"></i></span>
 						</a>
-						<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+						<a href="javascript:addToCart('{{this._id}}')"
+							class="buy-now d-flex justify-content-center align-items-center mx-1">
 							<span><i class="ion-ios-cart"></i></span>
 						</a>
 						<a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -38,6 +39,33 @@
 		</div>
 	</div>
 	{{/each}}
+</div>
+<div class="row mt-5">
+	<div class="col text-center">
+		<div class="block-27">
+			<ul>
+				{{#paginate pagination type="first"}}
+				<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;&lt;</a>
+				</li>
+				{{/paginate}}
+				{{#paginate pagination type="previous"}}
+				<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&lt;</a>
+				</li>
+				{{/paginate}}
+				{{#paginate pagination type="middle" limit="7"}}
+				<li {{#if active}} class="active" {{/if}}><a href="javascript:submitForm({{n}})">{{n}}</a></li>
+				{{/paginate}}
+				{{#paginate pagination type="next"}}
+				<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;</a>
+				</li>
+				{{/paginate}}
+				{{#paginate pagination type="last"}}
+				<li {{#if disabled}}class="disabled" {{/if}}><a href="javascript:submitForm({{n}})">&gt;&gt;</a>
+				</li>
+				{{/paginate}}
+			</ul>
+		</div>
+	</div>
 </div>
 <div class="row mt-5">
 	<div class="col text-center">
